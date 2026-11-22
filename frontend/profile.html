@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - SignConnect AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/learning.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-brand">
+        <a href="dashboard.html">
+          <img src="assets/icons/logo.svg" alt="SignConnect AI">
+        </a>
+      </div>
+
+      <div class="sidebar-menu-wrapper">
+        <div class="sidebar-heading">Main Navigation</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-grid-fill"></i>
+                <span>Dashboard</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="learn.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-book-half"></i>
+                <span>Learn Sign Language</span>
+              </div>
+              <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
+            </a>
+          </li>
+          <li>
+            <a href="practice.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-camera-video"></i>
+                <span>Practice</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="communication.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-chat-dots-fill"></i>
+                <span>Real-Time Comm</span>
+              </div>
+              <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
+            </a>
+          </li>
+          <li>
+            <a href="text-to-sign.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-translate"></i>
+                <span>Text-to-Sign</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="quiz.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-trophy"></i>
+                <span>Quizzes</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="progress.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>My Progress</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-heading">Account & Settings</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="profile.html" class="sidebar-link active">
+              <div class="sidebar-link-content">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
+              <div class="sidebar-link-content">
+                <i class="bi bi-box-arrow-right text-danger"></i>
+                <span>Logout</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">SL</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">SignConnect Learner</div>
+            <div class="sidebar-user-role">Student / ISL Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Topbar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="topbar-breadcrumb">
+            <a href="dashboard.html" class="text-secondary text-decoration-none">SignConnect</a>
+            <i class="bi bi-chevron-right text-muted small"></i>
+            <span class="current">User Profile</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="backend-status-pill" id="backendStatusPill" title="Backend Status">
+            <span class="status-dot"></span> Flask API: Ready
+          </div>
+          <button class="topbar-icon-btn" title="Notifications">
+            <i class="bi bi-bell"></i>
+          </button>
+          <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
+            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+            <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">SignConnect Learner</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <div class="row g-4">
+          <!-- Left Column: User Summary Card -->
+          <div class="col-lg-4">
+            <div class="dash-card text-center mb-4">
+              <div class="sidebar-user-avatar mx-auto mb-3" style="width: 80px; height: 80px; font-size: 1.85rem;">SL</div>
+              <h4 class="fw-bold mb-1" id="profileCardName">SignConnect Learner</h4>
+              <p class="text-secondary small mb-2" id="profileCardEmail">learner@signconnect.ai</p>
+              <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill small mb-4">Student / ISL Learner</span>
+
+              <div class="border-top pt-3 text-start">
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                  <span class="text-secondary small">Member Since</span>
+                  <span class="fw-bold small text-dark">November 2026</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                  <span class="text-secondary small">Lessons Completed</span>
+                  <span class="fw-bold small text-dark">18 / 48</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                  <span class="text-secondary small">Average Quiz Accuracy</span>
+                  <span class="fw-bold small text-success">88%</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center py-2">
+                  <span class="text-secondary small">Learning Streak</span>
+                  <span class="fw-bold small text-warning"><i class="bi bi-fire"></i> 5 Days</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Backend Developer Configuration Widget -->
+            <div class="dash-card">
+              <h6 class="fw-bold mb-2">
+                <i class="bi bi-gear-fill text-primary"></i> Backend API Connection Settings
+              </h6>
+              <p class="small text-secondary mb-3">
+                Configure the Flask server address for team integration (OpenCV + MediaPipe).
+              </p>
+              <form id="apiConfigForm">
+                <div class="mb-3">
+                  <label for="apiUrlInput" class="form-label small fw-bold">Flask Base URL:</label>
+                  <input type="text" class="form-control form-control-sm" id="apiUrlInput" value="http://127.0.0.1:5000/api">
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn-sm w-100 mb-2">
+                  <i class="bi bi-check-circle"></i> Save API Endpoint
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Column: Edit Profile & Password -->
+          <div class="col-lg-8">
+            <!-- Edit Profile Form -->
+            <div class="dash-card mb-4">
+              <div class="dash-card-header">
+                <h5 class="dash-card-title">
+                  <i class="bi bi-person-lines-fill text-primary"></i> Edit Personal Information
+                </h5>
+                <span class="badge bg-light text-secondary border small">Account Details</span>
+              </div>
+
+              <form id="editProfileForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="profileFullName" class="form-label small fw-bold">Full Name</label>
+                    <input type="text" class="form-control" id="profileFullName" value="SignConnect Learner" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileEmail" class="form-label small fw-bold">Email Address</label>
+                    <input type="email" class="form-control" id="profileEmail" value="learner@signconnect.ai" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileRole" class="form-label small fw-bold">Role / Specialty</label>
+                    <input type="text" class="form-control" id="profileRole" value="Student / ISL Learner">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileGoal" class="form-label small fw-bold">Daily Practice Goal</label>
+                    <select class="form-select" id="profileGoal">
+                      <option value="15">15 Minutes / Day</option>
+                      <option value="30" selected>30 Minutes / Day</option>
+                      <option value="60">60 Minutes / Day</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="text-end mt-4">
+                  <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-check-lg me-1"></i> Update Profile
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Change Password Form -->
+            <div class="dash-card mb-4">
+              <div class="dash-card-header">
+                <h5 class="dash-card-title">
+                  <i class="bi bi-shield-lock-fill text-primary"></i> Change Password
+                </h5>
+                <span class="badge bg-light text-secondary border small">Security</span>
+              </div>
+
+              <form id="changePasswordForm">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label for="currentPassword" class="form-label small fw-bold">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword" placeholder="••••••••" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="newPassword" class="form-label small fw-bold">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Minimum 8 characters" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="confirmNewPassword" class="form-label small fw-bold">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirmNewPassword" placeholder="Re-enter new password" required>
+                  </div>
+                </div>
+
+                <div class="text-end mt-4">
+                  <button type="submit" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-key me-1"></i> Update Password
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Logout Session Section -->
+            <div class="dash-card border-danger border-opacity-25 bg-soft-danger p-4">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div>
+                  <h6 class="fw-bold text-danger mb-1">Session Termination</h6>
+                  <p class="small text-secondary mb-0">Sign out of your active browser session on this computer.</p>
+                </div>
+                <button type="button" class="btn btn-danger" onclick="SignConnect.logout()">
+                  <i class="bi bi-box-arrow-right me-1"></i> Logout Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = SignConnect.getUser();
+      if (user) {
+        const nameInput = document.getElementById('profileFullName');
+        const emailInput = document.getElementById('profileEmail');
+        const cardName = document.getElementById('profileCardName');
+        const cardEmail = document.getElementById('profileCardEmail');
+
+        if (nameInput) nameInput.value = user.name;
+        if (emailInput) emailInput.value = user.email;
+        if (cardName) cardName.textContent = user.name;
+        if (cardEmail) cardEmail.textContent = user.email;
+      }
+
+      // API config save
+      const apiForm = document.getElementById('apiConfigForm');
+      if (apiForm) {
+        const apiInput = document.getElementById('apiUrlInput');
+        apiInput.value = window.SignConnectConfig.API_BASE_URL;
+
+        apiForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newUrl = apiInput.value.trim();
+          if (newUrl) {
+            localStorage.setItem('signconnect_api_url', newUrl);
+            window.SignConnectConfig.API_BASE_URL = newUrl;
+            SignConnect.showToast(`Flask API Base URL updated to: ${newUrl}`, 'success');
+          }
+        });
+      }
+
+      // Profile update
+      const editForm = document.getElementById('editProfileForm');
+      if (editForm) {
+        editForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newName = document.getElementById('profileFullName').value.trim();
+          const newEmail = document.getElementById('profileEmail').value.trim();
+          const currentUser = SignConnect.getUser() || {};
+          currentUser.name = newName;
+          currentUser.email = newEmail;
+          currentUser.avatar = newName.substring(0, 2).toUpperCase();
+          SignConnect.setUser(currentUser);
+          SignConnect.showToast('Profile information saved successfully.', 'success');
+          setTimeout(() => location.reload(), 800);
+        });
+      }
+
+      // Change Password form
+      const pwdForm = document.getElementById('changePasswordForm');
+      if (pwdForm) {
+        pwdForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newP = document.getElementById('newPassword').value;
+          const confP = document.getElementById('confirmNewPassword').value;
+          if (newP.length < 8) {
+            SignConnect.showToast('Password must be at least 8 characters long.', 'warning');
+            return;
+          }
+          if (newP !== confP) {
+            SignConnect.showToast('New passwords do not match.', 'danger');
+            return;
+          }
+          SignConnect.showToast('Password updated successfully.', 'success');
+          pwdForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

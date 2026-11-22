@@ -1,0 +1,182 @@
+/* ==========================================================================
+   SignConnect AI - Responsive Stylesheet (Tablets & Mobile Breakpoints)
+   ========================================================================== */
+
+/* Backdrop overlay for mobile sidebar */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 995;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   Breakpoints: Max Width 991px (Tablets & Below)
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  /* Sidebar Off-canvas behavior */
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .app-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle-btn {
+    display: inline-flex !important;
+  }
+
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .app-topbar {
+    padding: 0 1.25rem;
+  }
+
+  .page-content {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 2.6rem;
+  }
+
+  .hero-section {
+    padding: 3.5rem 0 2.5rem;
+  }
+
+  /* Split Authentication layout */
+  .auth-container {
+    flex-direction: column;
+  }
+
+  .auth-sidebar {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .auth-main {
+    padding: 2rem 1.25rem;
+  }
+
+  /* Communication Section Split Stack */
+  .communication-layout {
+    flex-direction: column;
+  }
+
+  .camera-feed-container {
+    height: 360px;
+  }
+}
+
+/* ==========================================================================
+   Breakpoints: Max Width 767.98px (Mobile Phones)
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 2.15rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .cta-banner {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .quiz-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .camera-feed-container {
+    height: 280px;
+  }
+
+  .camera-controls-bar {
+    flex-wrap: wrap;
+  }
+
+  .predicted-sign-text {
+    font-size: 2.2rem;
+  }
+
+  .action-banner-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+  }
+
+  .signs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .sign-card-thumb {
+    min-height: 130px;
+    padding: 0.85rem;
+  }
+
+  .sign-card-title {
+    font-size: 1rem;
+  }
+
+  .sign-demo-card {
+    min-width: 190px;
+  }
+
+  .public-navbar .btn-primary {
+    display: none;
+  }
+
+  .topbar-breadcrumb {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Breakpoints: Max Width 575.98px (Small Screens)
+   ========================================================================== */
+
+@media (max-width: 575.98px) {
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .signs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .auth-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .metric-value {
+    font-size: 1.75rem;
+  }
+}
