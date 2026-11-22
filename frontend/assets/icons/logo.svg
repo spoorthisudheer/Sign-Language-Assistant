@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+  </defs>
+  <!-- Icon Mark -->
+  <g transform="translate(6, 6)">
+    <rect width="48" height="48" rx="14" fill="url(#logoGrad)" />
+    <!-- Stylized Hands & Neural Wave -->
+    <path d="M18 34 C16 30, 16 22, 20 18 C22 16, 25 17, 26 20 C27 15, 30 14, 32 17 C34 14, 37 15, 38 19 L38 29 C38 34, 33 37, 27 37 C22 37, 19 36, 18 34 Z" fill="#FFFFFF" fill-opacity="0.9" />
+    <!-- AI Sparkle / Node -->
+    <circle cx="36" cy="14" r="3.5" fill="url(#accentGrad)" stroke="#FFFFFF" stroke-width="1.5" />
+    <circle cx="14" cy="22" r="2.5" fill="#38BDF8" />
+    <path d="M14 22 L20 18 M32 17 L36 14" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2,2" opacity="0.8" />
+  </g>
+  <!-- Wordmark -->
+  <text x="64" y="32" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-weight="800" font-size="20" fill="#0F172A" letter-spacing="-0.5">Sign<tspan fill="#4F46E5">Connect</tspan></text>
+  <rect x="180" y="19" width="30" height="15" rx="4" fill="url(#logoGrad)" />
+  <text x="195" y="30" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="9" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">AI</text>
+  <text x="65" y="46" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="500" font-size="9.5" fill="#64748B" letter-spacing="0.2">ASSISTIVE ISL PLATFORM</text>
+</svg>

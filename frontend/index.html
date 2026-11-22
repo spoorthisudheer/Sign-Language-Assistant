@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignConnect AI - AI-Powered Sign Language Learning and Real-Time Communication Assistant</title>
+  <meta name="description" content="Learn Indian Sign Language, practice gestures, and communicate in real time with AI-powered vision and speech assistance.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+
+  <!-- Bootstrap 5 CSS & Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg public-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="assets/icons/logo.svg" alt="SignConnect AI Logo">
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="learn.html">Learn Sign Language</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="practice.html">Practice</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="communication.html">Communication</a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="login.html" class="btn btn-outline-primary">Login</a>
+          <a href="register.html" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="hero-badge">
+            <i class="bi bi-stars"></i> Next-Gen Assistive AI Platform
+          </div>
+          <h1 class="hero-title">
+            Communication <br>
+            <span class="text-gradient">Without Barriers</span>
+          </h1>
+          <p class="hero-subtitle">
+            Learn Indian Sign Language, practice gestures with real-time camera feedback, and communicate effortlessly with the power of Artificial Intelligence.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <a href="learn.html" class="btn btn-primary btn-lg">
+              <i class="bi bi-book-half"></i> Start Learning
+            </a>
+            <a href="communication.html" class="btn btn-outline-primary btn-lg">
+              <i class="bi bi-camera-video"></i> Try Real-Time Communication
+            </a>
+          </div>
+
+          <div class="d-flex align-items-center gap-4 pt-2">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-check-circle-fill text-success fs-5"></i>
+              <span class="small fw-semibold text-secondary">Verified Indian Sign Language (ISL)</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-shield-check text-primary fs-5"></i>
+              <span class="small fw-semibold text-secondary">MediaPipe & OpenCV Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="hero-visual-card">
+            <img src="assets/images/hero-ai-sign.svg" alt="SignConnect AI Vision Interface" class="img-fluid rounded-card">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-5 bg-white" id="about">
+    <div class="container py-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <span class="text-uppercase fw-bold text-primary small tracking-wide">About SignConnect AI</span>
+          <h2 class="display-6 fw-bold mt-2 mb-3">Bridging the Gap Between Deaf & Hearing Communities</h2>
+          <p class="text-secondary lead fs-6">
+            Sign language is a complete, natural language with its own rich grammar and syntax. Yet, over 63 million deaf and hard-of-hearing individuals in India often face immense communication barriers in classrooms, workplaces, and public spaces.
+          </p>
+          <p class="text-secondary">
+            <strong>SignConnect AI</strong> is an accessible educational and assistive platform designed to democratize Indian Sign Language (ISL) learning and provide real-time bilateral communication tools powered by computer vision and browser-native speech synthesis.
+          </p>
+          <div class="row g-3 mt-2">
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <i class="bi bi-universal-access fs-3 text-primary d-block mb-1"></i>
+                <h6 class="fw-bold mb-1">Accessibility First</h6>
+                <p class="small text-muted mb-0">Inclusive UX optimized for all learners and communicators.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded-3 border">
+                <i class="bi bi-cpu fs-3 text-primary d-block mb-1"></i>
+                <h6 class="fw-bold mb-1">AI-Powered Vision</h6>
+                <p class="small text-muted mb-0">21-landmark hand tracking architecture with OpenCV.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-lg p-4 bg-gradient-subtle rounded-card">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom">
+              <div>
+                <h5 class="fw-bold mb-1">Indian Sign Language (ISL) Distinction</h5>
+                <span class="badge bg-primary-subtle text-primary">Academic Standard</span>
+              </div>
+              <i class="bi bi-info-circle fs-4 text-primary"></i>
+            </div>
+            <p class="text-secondary small">
+              Unlike American Sign Language (ASL) which is predominantly one-handed for fingerspelling, <strong>Indian Sign Language (ISL) employs extensive two-handed alphabet structures and indigenous cultural idioms</strong>. SignConnect AI is carefully curated around verified ISL standards to prevent linguistic confusion.
+            </p>
+            <div class="table-responsive">
+              <table class="table table-sm align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Feature</th>
+                    <th>Indian Sign Language (ISL)</th>
+                    <th>SignConnect AI Implementation</th>
+                  </tr>
+                </thead>
+                <tbody class="small">
+                  <tr>
+                    <td class="fw-bold">Alphabets (A-Z)</td>
+                    <td>Primarily two-handed coordination</td>
+                    <td><span class="text-success fw-bold"><i class="bi bi-check2"></i> Two-handed visual vectors</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">Grammar Structure</td>
+                    <td>Topic-Comment word order</td>
+                    <td><span class="text-success fw-bold"><i class="bi bi-check2"></i> Contextual token breakdown</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">Speech Bridge</td>
+                    <td>Requires interpreter assistance</td>
+                    <td><span class="text-success fw-bold"><i class="bi bi-check2"></i> Integrated Web Speech TTS</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-5 bg-light" id="features">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="badge bg-primary-subtle text-primary px-3 py-2 fw-bold mb-2">Platform Capabilities</span>
+        <h2 class="display-6 fw-bold">Everything You Need to Learn & Communicate</h2>
+        <p class="text-secondary">Explore 6 integrated modules engineered for effortless learning, camera-guided practice, and real-time speech translation.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Feature 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper bg-gradient-primary">
+              <i class="bi bi-translate"></i>
+            </div>
+            <h5 class="fw-bold mb-2">1. Interactive Sign Language Learning</h5>
+            <p class="text-secondary small mb-4">
+              Explore an extensive curriculum of ISL alphabets (A-Z), numbers (0-9), and essential everyday phrases with verified visual demonstrations and step-by-step hand positioning guides.
+            </p>
+            <a href="learn.html" class="mt-auto fw-bold small text-primary">
+              Browse Curriculum <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper bg-gradient-accent">
+              <i class="bi bi-camera"></i>
+            </div>
+            <h5 class="fw-bold mb-2">2. AI-Powered Gesture Recognition</h5>
+            <p class="text-secondary small mb-4">
+              Camera-based interactive studio designed to capture user hand gestures through computer vision landmarks, providing instant feedback on alignment accuracy.
+            </p>
+            <a href="practice.html" class="mt-auto fw-bold small text-primary">
+              Open Practice Studio <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, #10B981, #059669);">
+              <i class="bi bi-chat-square-quote"></i>
+            </div>
+            <h5 class="fw-bold mb-2">3. Real-Time Sign-to-Text Conversion</h5>
+            <p class="text-secondary small mb-4">
+              Converts classified hand signs continuously into structured textual words and sentences, enabling deaf individuals to express thoughts effortlessly to hearing peers.
+            </p>
+            <a href="communication.html" class="mt-auto fw-bold small text-primary">
+              Launch Communicator <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, #0EA5E9, #2563EB);">
+              <i class="bi bi-volume-up"></i>
+            </div>
+            <h5 class="fw-bold mb-2">4. Text-to-Speech Communication</h5>
+            <p class="text-secondary small mb-4">
+              Instant voice output utilizing the browser-native Web Speech API. Speaks compiled sentences with natural Indian English cadence for accessible spoken dialogue.
+            </p>
+            <a href="communication.html" class="mt-auto fw-bold small text-primary">
+              Test Voice Output <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, #8B5CF6, #D946EF);">
+              <i class="bi bi-signpost-2"></i>
+            </div>
+            <h5 class="fw-bold mb-2">5. Text-to-Sign Demonstrations</h5>
+            <p class="text-secondary small mb-4">
+              Type or paste English phrases to generate animated sequential sign demonstrations, complete with token breakdowns and finger-spelling fallbacks for unsupported words.
+            </p>
+            <a href="text-to-sign.html" class="mt-auto fw-bold small text-primary">
+              Try Converter <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, #F59E0B, #EA580C);">
+              <i class="bi bi-trophy"></i>
+            </div>
+            <h5 class="fw-bold mb-2">6. Interactive Quizzes & Progress</h5>
+            <p class="text-secondary small mb-4">
+              Gamified quizzes featuring real sign identification, multiple choice challenges, instant answer feedback, Chart.js analytics, and achievement milestone badges.
+            </p>
+            <a href="quiz.html" class="mt-auto fw-bold small text-primary">
+              Take a Quiz <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-5 bg-white" id="how-it-works">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary-subtle text-primary px-3 py-2 fw-bold mb-2">Architecture Pipeline</span>
+        <h2 class="display-6 fw-bold">How SignConnect AI Works</h2>
+        <p class="text-secondary">From physical hand gesture to audible vocal output in milliseconds.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Step 1 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-icon bg-soft-primary">
+              <i class="bi bi-hand-index-thumb text-primary"></i>
+            </div>
+            <h6 class="fw-bold mb-2">Hand Gesture</h6>
+            <p class="text-secondary small mb-0">The user gestures in front of their laptop or smartphone webcam under standard lighting.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-icon bg-soft-warning">
+              <i class="bi bi-cpu text-warning"></i>
+            </div>
+            <h6 class="fw-bold mb-2">AI Recognition</h6>
+            <p class="text-secondary small mb-0">OpenCV & MediaPipe extract 21 coordinates per hand for deep learning gesture classification.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-icon bg-soft-success">
+              <i class="bi bi-chat-text text-success"></i>
+            </div>
+            <h6 class="fw-bold mb-2">Text Conversion</h6>
+            <p class="text-secondary small mb-0">The classified sign is decoded into clean textual tokens and assembled into structured sentences.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-icon" style="background: rgba(14, 165, 233, 0.12); color: #0EA5E9;">
+              <i class="bi bi-megaphone-fill"></i>
+            </div>
+            <h6 class="fw-bold mb-2">Voice Output</h6>
+            <p class="text-secondary small mb-0">The browser Web Speech API synthesizes the text into clear audible speech for hearing listeners.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section class="py-5 bg-light">
+    <div class="container py-3">
+      <div class="row g-4">
+        <div class="col-6 col-lg-3">
+          <div class="stat-box">
+            <div class="stat-number">63M+</div>
+            <div class="stat-label">Deaf Community in India</div>
+            <div class="stat-subtext">Estimated by NSSO surveys</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-box">
+            <div class="stat-number">48+</div>
+            <div class="stat-label">Curriculum Signs</div>
+            <div class="stat-subtext">ISL Alphabets, Numbers & Phrases</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-box">
+            <div class="stat-number">21</div>
+            <div class="stat-label">Hand Landmarks</div>
+            <div class="stat-subtext">3D Skeletal Keypoints per Hand</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-box">
+            <div class="stat-number">&lt;200ms</div>
+            <div class="stat-label">Target Inference Latency</div>
+            <div class="stat-subtext">Target for Smooth Real-Time Chat</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Banner -->
+  <section class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="cta-banner">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <span class="badge bg-white text-dark px-3 py-2 fw-bold mb-3">Join the Accessibility Movement</span>
+            <h2 class="display-6 fw-bold mb-3">Start Your Sign Language Journey Today</h2>
+            <p class="lead fs-6 text-light opacity-75 mb-0">
+              Whether you are learning ISL for personal communication, professional accessibility, or exploring assistive AI engineering, SignConnect AI provides the complete toolkit.
+            </p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <div class="d-flex flex-column flex-sm-row flex-lg-column gap-3 justify-content-lg-end">
+              <a href="register.html" class="btn btn-primary btn-lg">Create Free Account</a>
+              <a href="communication.html" class="btn btn-outline-light btn-lg">Try Live Camera</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="public-footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <img src="assets/icons/logo.svg" alt="SignConnect AI Logo" class="mb-3 filter-invert-white" style="height: 38px;">
+          <p class="small text-secondary pe-lg-4">
+            SignConnect AI is a college mini-project dedicated to assistive communication, bridging the gap between hearing-impaired individuals and society through Indian Sign Language AI recognition.
+          </p>
+          <div class="d-flex gap-3 text-secondary fs-5">
+            <a href="#" class="text-secondary" title="GitHub Project"><i class="bi bi-github"></i></a>
+            <a href="#" class="text-secondary" title="Documentation"><i class="bi bi-file-earmark-text"></i></a>
+            <a href="#" class="text-secondary" title="OpenCV Community"><i class="bi bi-camera"></i></a>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5>Learning</h5>
+          <ul>
+            <li><a href="learn.html">ISL Alphabets (A-Z)</a></li>
+            <li><a href="learn.html">ISL Numbers (0-9)</a></li>
+            <li><a href="learn.html">Greetings</a></li>
+            <li><a href="learn.html">Common Words</a></li>
+            <li><a href="quiz.html">Practice Quizzes</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5>Assistive Tools</h5>
+          <ul>
+            <li><a href="communication.html">Real-Time Communicator</a></li>
+            <li><a href="practice.html">Webcam Gesture Studio</a></li>
+            <li><a href="text-to-sign.html">Text-to-Sign Demonstrator</a></li>
+            <li><a href="progress.html">Learning Analytics</a></li>
+            <li><a href="dashboard.html">User Dashboard</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4">
+          <h5>Project Information</h5>
+          <p class="small text-secondary mb-2">
+            <strong>Project Title:</strong> AI-Powered Sign Language Learning and Real-Time Communication Assistant
+          </p>
+          <p class="small text-secondary mb-2">
+            <strong>Tech Stack:</strong> HTML5, CSS3, JavaScript, Bootstrap 5, Flask (Python), OpenCV, MediaPipe, MySQL.
+          </p>
+          <p class="small text-secondary mb-0">
+            <strong>Frontend Developer:</strong> College Engineering Mini-Project Team
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div>
+          &copy; 2026 SignConnect AI. All rights reserved. Created for educational & accessibility purposes.
+        </div>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-secondary">Privacy Policy</a>
+          <span>·</span>
+          <a href="#" class="text-secondary">Terms of Service</a>
+          <span>·</span>
+          <a href="#" class="text-secondary">ISL Guidelines</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Main Core Utilities -->
+  <script src="js/main.js"></script>
+</body>
+</html>

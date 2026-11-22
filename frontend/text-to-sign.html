@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Sign Converter - SignConnect AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/learning.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-brand">
+        <a href="dashboard.html">
+          <img src="assets/icons/logo.svg" alt="SignConnect AI">
+        </a>
+      </div>
+
+      <div class="sidebar-menu-wrapper">
+        <div class="sidebar-heading">Main Navigation</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-grid-fill"></i>
+                <span>Dashboard</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="learn.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-book-half"></i>
+                <span>Learn Sign Language</span>
+              </div>
+              <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
+            </a>
+          </li>
+          <li>
+            <a href="practice.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-camera-video"></i>
+                <span>Practice</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="communication.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-chat-dots-fill"></i>
+                <span>Real-Time Comm</span>
+              </div>
+              <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
+            </a>
+          </li>
+          <li>
+            <a href="text-to-sign.html" class="sidebar-link active">
+              <div class="sidebar-link-content">
+                <i class="bi bi-translate"></i>
+                <span>Text-to-Sign</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="quiz.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-trophy"></i>
+                <span>Quizzes</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="progress.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>My Progress</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-heading">Account & Settings</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="profile.html" class="sidebar-link">
+              <div class="sidebar-link-content">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
+              <div class="sidebar-link-content">
+                <i class="bi bi-box-arrow-right text-danger"></i>
+                <span>Logout</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">SL</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">SignConnect Learner</div>
+            <div class="sidebar-user-role">Student / ISL Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Topbar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="topbar-breadcrumb">
+            <a href="dashboard.html" class="text-secondary text-decoration-none">SignConnect</a>
+            <i class="bi bi-chevron-right text-muted small"></i>
+            <span class="current">Text-to-Sign</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="backend-status-pill" id="backendStatusPill" title="Backend Status">
+            <span class="status-dot"></span> Flask API: Ready
+          </div>
+          <button class="topbar-icon-btn" title="Notifications">
+            <i class="bi bi-bell"></i>
+          </button>
+          <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
+            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+            <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">SignConnect Learner</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+          <div>
+            <h1 class="page-header-title">Text to Indian Sign Language (ISL) Demonstrator</h1>
+            <p class="page-header-desc">
+              Convert English sentences and words into sequential sign demonstrations with animated playback.
+            </p>
+          </div>
+        </div>
+
+        <!-- Academic Linguistic Disclaimer Box -->
+        <div class="alert alert-secondary border-0 rounded-4 shadow-sm mb-4 d-flex align-items-start gap-3">
+          <i class="bi bi-book-half fs-4 text-primary mt-1"></i>
+          <div>
+            <h6 class="fw-bold mb-1 text-dark">Linguistic Note on Sign Language Grammar</h6>
+            <p class="small text-secondary mb-0">
+              Natural Indian Sign Language has its own rich grammatical structure (Topic-Comment order, spatial indexing, facial non-manual markers) which differs fundamentally from English word order. Sequential word cards offer lexical representation for learning and assistive reference; words not in the core vocabulary are systematically broken down into finger-spelled ISL alphabets.
+            </p>
+          </div>
+        </div>
+
+        <!-- Input Card -->
+        <div class="text-to-sign-input-wrapper">
+          <form id="textToSignForm">
+            <label for="textSignInput" class="form-label fw-bold text-dark mb-2">
+              Enter English Sentence or Phrase:
+            </label>
+            <div class="input-group input-group-lg mb-3">
+              <input type="text" class="form-control" id="textSignInput" placeholder="e.g. HELLO HOW ARE YOU, THANK YOU, WATER, HELP" value="HELLO HOW ARE YOU" required>
+              <button class="btn btn-primary px-4" type="submit">
+                <i class="bi bi-arrow-repeat me-1"></i> Convert to Sign
+              </button>
+              <button class="btn btn-outline-secondary" type="button" id="btnClearTextInput">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Quick Preset Pills -->
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <span class="small fw-bold text-secondary me-1">Try Sample Sentences:</span>
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="HELLO HOW ARE YOU">
+              "HELLO HOW ARE YOU"
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="THANK YOU">
+              "THANK YOU"
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="PLEASE HELP">
+              "PLEASE HELP"
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="WATER AND FOOD">
+              "WATER AND FOOD"
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="WHAT IS YOUR NAME">
+              "WHAT IS YOUR NAME"
+            </button>
+          </div>
+        </div>
+
+        <!-- Output Demonstrations Area -->
+        <div class="sign-sequence-container">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Sign Demonstrations Sequence</h5>
+              <span class="text-secondary small">Click any card or token to jump to its sign demonstration</span>
+            </div>
+
+            <!-- Playback Controls -->
+            <div class="d-flex align-items-center gap-2" id="playbackControlsBar">
+              <button type="button" class="btn btn-primary btn-sm" id="btnPlaySignSequence">
+                <i class="bi bi-play-fill me-1"></i> Play Sequence
+              </button>
+              <button type="button" class="btn btn-outline-secondary btn-sm" id="btnPauseSignSequence" style="display: none;">
+                <i class="bi bi-pause-fill me-1"></i> Pause
+              </button>
+              <div class="d-flex align-items-center gap-1 ms-2">
+                <span class="small text-muted">Speed:</span>
+                <select class="form-select form-select-sm" id="playbackSpeedSelect" style="width: 80px;">
+                  <option value="0.5">0.5x</option>
+                  <option value="1.0" selected>1.0x</option>
+                  <option value="1.5">1.5x</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Token Breakdown Bar -->
+          <div class="sequence-tokens-bar" id="tokensContainer">
+            <!-- Tokens rendered dynamically by text-to-sign.js -->
+          </div>
+
+          <!-- Unsupported Warning Notification (Conditional) -->
+          <div class="alert alert-warning border-0 rounded-3 small mb-3" id="unsupportedNoticeBox" style="display: none;">
+            <i class="bi bi-exclamation-triangle-fill me-2 text-warning"></i>
+            Some words in your phrase are not yet in our pre-recorded ISL dictionary. They are dynamically broken down into verified Indian Sign Language finger-spelling alphabets.
+          </div>
+
+          <!-- Horizontal Sign Demonstration Cards Scroller -->
+          <div class="sign-cards-carousel" id="signCardsCarousel">
+            <div class="col-12 text-center py-5 text-muted">
+              Enter words above and click "Convert to Sign" to see sign demonstrations.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/isl-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/text-to-sign.js"></script>
+</body>
+</html>
