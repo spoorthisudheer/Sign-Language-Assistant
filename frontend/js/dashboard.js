@@ -24,15 +24,19 @@ async function loadDashboardMetrics() {
     const elTotal = document.getElementById('statTotalLessons');
     const elCompleted = document.getElementById('statCompletedLessons');
     const elQuizzes = document.getElementById('statQuizzesAttempted');
+    const elAverage = document.getElementById('statAverageScore');
     const elProgress = document.getElementById('statLearningProgress');
     const elProgressBar = document.getElementById('statLearningProgressBar');
+    const elCompletionRate = document.getElementById('statCompletionRate');
 
     if (elTotal) elTotal.textContent = p.totalLessons || 48;
-    if (elCompleted) elCompleted.textContent = p.completedLessons || 18;
-    if (elQuizzes) elQuizzes.textContent = p.quizzesAttempted || 12;
+    if (elCompleted) elCompleted.textContent = p.completedLessons ?? 0;
+    if (elQuizzes) elQuizzes.textContent = p.quizzesAttempted ?? 0;
+    if (elAverage) elAverage.textContent = `${p.averageScore ?? 0}%`;
     
-    const percentage = p.overallPercentage || Math.round(((p.completedLessons || 18) / (p.totalLessons || 48)) * 100);
+    const percentage = p.overallPercentage ?? Math.round(((p.completedLessons ?? 0) / (p.totalLessons ?? 48)) * 100);
     if (elProgress) elProgress.textContent = `${percentage}%`;
+    if (elCompletionRate) elCompletionRate.textContent = `${percentage}%`;
     if (elProgressBar) elProgressBar.style.width = `${percentage}%`;
 
   } catch (err) {
@@ -40,30 +44,59 @@ async function loadDashboardMetrics() {
   }
 }
 
-// Render Recently Learned Signs Carousel/Grid
-function renderRecentSigns() {
-  const container = document.getElementById('recentSignsGrid');
-  if (!container) return;
+// Render Recently Learned Signs from actual user progress
+async function renderRecentSigns() {
+    const container = document.getElementById('recentSignsGrid');
+    if (!container) return;
 
-  // Selected sample recent signs from ISL dataset
-  const recentIds = ['hello', 'a', 'thank_you', '5', 'help'];
-  
-  if (!window.ISL_DATA) {
-    console.warn('ISL_DATA not yet loaded.');
-    return;
-  }
+    try {
+        const data = await SignConnect.apiCall('/progress');
+        const recentLessons = data.progress?.recentLessons || [];
 
-  const signs = recentIds.map(id => window.ISL_DATA.getSign(id)).filter(Boolean);
+        if (recentLessons.length === 0) {
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; width: 100%; text-align: center; padding: 30px 10px;">
+                    <p class="text-muted mb-1">
+                        No completed lessons yet.
+                    </p>
+                    <p class="text-muted small">
+                        Start learning to see your recently completed signs here!
+                    </p>
+                </div>
+            `;
+            return;
+        }
 
-  container.innerHTML = signs.map(sign => `
-    <div class="recent-sign-card" onclick="window.location.href='learn.html?sign=${sign.id}'" title="Click to view ${sign.title}">
-      <div class="recent-sign-thumb">
-        <img src="assets/images/isl_${sign.id}.svg" alt="${sign.title}" loading="lazy">
-      </div>
-      <div class="recent-sign-name">${sign.label}</div>
-      <div class="recent-sign-time">${sign.category}</div>
-    </div>
-  `).join('');
+        container.innerHTML = recentLessons.map(lesson => `
+            <div class="recent-sign-card"
+                 onclick="window.location.href='learn.html?sign=${encodeURIComponent(lesson.id)}'"
+                 title="Click to view ${lesson.title}">
+
+                <div class="recent-sign-thumb">
+                    <img src="${lesson.image_path}"
+                         alt="${lesson.title}"
+                         loading="lazy">
+                </div>
+
+                <div class="recent-sign-name">
+                    ${lesson.title}
+                </div>
+
+                <div class="recent-sign-time">
+                    ${lesson.category}
+                </div>
+            </div>
+        `).join('');
+
+    } catch (error) {
+        console.error('Failed to load recent lessons:', error);
+
+        container.innerHTML = `
+            <p class="text-muted">
+                Unable to load recently completed lessons.
+            </p>
+        `;
+    }
 }
 
 // Interactive Dashboard Events

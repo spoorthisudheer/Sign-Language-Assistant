@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="css/learning.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
   <div class="app-wrapper">
+
     <!-- Sidebar Navigation -->
     <aside class="app-sidebar" id="appSidebar">
       <div class="sidebar-brand">
@@ -28,6 +30,7 @@
 
       <div class="sidebar-menu-wrapper">
         <div class="sidebar-heading">Main Navigation</div>
+
         <ul class="sidebar-nav">
           <li>
             <a href="dashboard.html" class="sidebar-link">
@@ -37,6 +40,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="learn.html" class="sidebar-link active">
               <div class="sidebar-link-content">
@@ -46,6 +50,7 @@
               <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
             </a>
           </li>
+
           <li>
             <a href="practice.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -54,6 +59,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="communication.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -63,6 +69,7 @@
               <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
             </a>
           </li>
+
           <li>
             <a href="text-to-sign.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -71,6 +78,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="quiz.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -79,6 +87,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="progress.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -90,6 +99,7 @@
         </ul>
 
         <div class="sidebar-heading">Account & Settings</div>
+
         <ul class="sidebar-nav">
           <li>
             <a href="profile.html" class="sidebar-link">
@@ -99,6 +109,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
               <div class="sidebar-link-content">
@@ -123,12 +134,14 @@
 
     <!-- Main Content Area -->
     <main class="app-main">
+
       <!-- Topbar -->
       <header class="app-topbar">
         <div class="topbar-left">
           <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
             <i class="bi bi-list"></i>
           </button>
+
           <div class="topbar-breadcrumb">
             <a href="dashboard.html" class="text-secondary text-decoration-none">SignConnect</a>
             <i class="bi bi-chevron-right text-muted small"></i>
@@ -140,18 +153,24 @@
           <div class="backend-status-pill" id="backendStatusPill" title="Backend Status">
             <span class="status-dot"></span> Flask API: Ready
           </div>
+
           <button class="topbar-icon-btn" title="Notifications">
             <i class="bi bi-bell"></i>
           </button>
+
           <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
-            <div class="sidebar-user-avatar topbar-user-avatar" id="topbarUserAvatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
-            <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name" id="topbarUserName">SignConnect Learner</span>
+            <div class="sidebar-user-avatar topbar-user-avatar" id="topbarUserAvatar"
+              style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+
+            <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name"
+              id="topbarUserName">SignConnect Learner</span>
           </a>
         </div>
       </header>
 
       <!-- Page Content -->
       <div class="page-content">
+
         <!-- Page Header -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
           <div>
@@ -160,10 +179,12 @@
               Explore authentic, verified ISL signs with detailed two-handed positioning instructions and audio pronunciation.
             </p>
           </div>
+
           <div class="d-flex align-items-center gap-2">
             <span class="badge bg-primary-subtle text-primary px-3 py-2 fw-bold" id="signsCountBadge">
               48 Signs Available
             </span>
+
             <a href="practice.html" class="btn btn-primary btn-sm">
               <i class="bi bi-camera-video"></i> Practice Studio
             </a>
@@ -173,43 +194,73 @@
         <!-- Academic Distinction Banner -->
         <div class="alert alert-info border-0 rounded-4 shadow-sm mb-4 d-flex align-items-start gap-3">
           <i class="bi bi-info-circle-fill fs-4 text-primary mt-1"></i>
+
           <div>
             <h6 class="fw-bold mb-1 text-primary">Indian Sign Language (ISL) Standard Clarification</h6>
+
             <p class="small text-secondary mb-0">
-              Unlike American Sign Language (ASL) where alphabets are one-handed, <strong>ISL alphabets are primarily two-handed gestures</strong>. Our curriculum is specifically built to ISL specifications so students learn accurate national accessibility standards.
+              Unlike American Sign Language (ASL) where alphabets are one-handed,
+              <strong>ISL alphabets are primarily two-handed gestures</strong>.
+              Our curriculum is specifically built to ISL specifications so students learn accurate national accessibility standards.
             </p>
           </div>
         </div>
 
         <!-- Search Bar & Category Filters -->
         <div class="row g-3 mb-4 align-items-center">
+
           <div class="col-xl-5 col-lg-5 col-md-12">
             <div class="input-group shadow-sm">
-              <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-              <input type="text" class="form-control border-start-0 ps-0" id="searchSignsInput" placeholder="Search by alphabet, word, or sign name (e.g. A, Hello, 5, Water)..." aria-label="Search signs">
-              <button class="btn btn-outline-secondary border-start-0" type="button" id="clearSearchBtn" style="display: none;" title="Clear search">
+              <span class="input-group-text bg-white border-end-0 text-muted">
+                <i class="bi bi-search"></i>
+              </span>
+
+              <input type="text" class="form-control border-start-0 ps-0"
+                id="searchSignsInput"
+                placeholder="Search by alphabet, word, or sign name (e.g. A, Hello, 5, Water)..."
+                aria-label="Search signs">
+
+              <button class="btn btn-outline-secondary border-start-0"
+                type="button" id="clearSearchBtn"
+                style="display: none;" title="Clear search">
                 <i class="bi bi-x-lg"></i>
               </button>
             </div>
           </div>
+
           <div class="col-xl-7 col-lg-7 col-md-12">
-            <!-- 5 Functional Category Filter Pills as requested -->
             <div class="category-filter-pills mb-0" id="categoryFilterContainer">
-              <button type="button" class="category-pill active" data-category="all" id="pillAllSigns">
-                <i class="bi bi-grid-fill"></i> All Signs <span class="badge bg-secondary-subtle text-secondary ms-1">48</span>
+
+              <button type="button" class="category-pill active"
+                data-category="all" id="pillAllSigns">
+                <i class="bi bi-grid-fill"></i> All Signs
+                <span class="badge bg-secondary-subtle text-secondary ms-1">48</span>
               </button>
-              <button type="button" class="category-pill" data-category="Alphabets" id="pillAlphabets">
-                <i class="bi bi-fonts"></i> Alphabets <span class="badge bg-secondary-subtle text-secondary ms-1">26</span>
+
+              <button type="button" class="category-pill"
+                data-category="Alphabets" id="pillAlphabets">
+                <i class="bi bi-fonts"></i> Alphabets
+                <span class="badge bg-secondary-subtle text-secondary ms-1">26</span>
               </button>
-              <button type="button" class="category-pill" data-category="Numbers" id="pillNumbers">
-                <i class="bi bi-123"></i> Numbers <span class="badge bg-secondary-subtle text-secondary ms-1">10</span>
+
+              <button type="button" class="category-pill"
+                data-category="Numbers" id="pillNumbers">
+                <i class="bi bi-123"></i> Numbers
+                <span class="badge bg-secondary-subtle text-secondary ms-1">10</span>
               </button>
-              <button type="button" class="category-pill" data-category="Greetings" id="pillGreetings">
-                <i class="bi bi-emoji-smile"></i> Greetings <span class="badge bg-secondary-subtle text-secondary ms-1">4</span>
+
+              <button type="button" class="category-pill"
+                data-category="Greetings" id="pillGreetings">
+                <i class="bi bi-emoji-smile"></i> Greetings
+                <span class="badge bg-secondary-subtle text-secondary ms-1">4</span>
               </button>
-              <button type="button" class="category-pill" data-category="Common Words" id="pillCommonWords">
-                <i class="bi bi-chat-left-quote"></i> Common Words <span class="badge bg-secondary-subtle text-secondary ms-1">8</span>
+
+              <button type="button" class="category-pill"
+                data-category="Common Words" id="pillCommonWords">
+                <i class="bi bi-chat-left-quote"></i> Common Words
+                <span class="badge bg-secondary-subtle text-secondary ms-1">8</span>
               </button>
+
             </div>
           </div>
         </div>
@@ -218,70 +269,125 @@
         <div class="signs-grid" id="signsGridContainer">
           <!-- Rendered dynamically by learning.js -->
         </div>
+
       </div>
     </main>
   </div>
 
   <!-- Detailed Sign Learning Modal -->
-  <div class="modal fade" id="signDetailModal" tabindex="-1" aria-labelledby="modalSignTitle" aria-hidden="true">
+  <div class="modal fade" id="signDetailModal" tabindex="-1"
+    aria-labelledby="modalSignTitle" aria-hidden="true">
+
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content rounded-4 border-0 shadow-xl overflow-hidden">
+
         <div class="modal-header border-bottom bg-light px-4 py-3">
           <div>
             <div class="d-flex align-items-center gap-2 mb-1">
-              <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase small" id="modalSignCategory">ISL Category</span>
-              <span class="badge bg-success-subtle text-success fw-bold small"><i class="bi bi-patch-check-fill me-1"></i>ISLRTC Standard</span>
+              <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase small"
+                id="modalSignCategory">ISL Category</span>
+
+              <span class="badge bg-success-subtle text-success fw-bold small">
+                <i class="bi bi-patch-check-fill me-1"></i>ISLRTC Standard
+              </span>
             </div>
+
             <h4 class="modal-title fw-bold" id="modalSignTitle">Sign Title (ISL)</h4>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <button type="button" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <div class="modal-body p-4">
           <div class="row g-4">
-            <!-- Left Column: Authentic ISL Demonstration & Audio Pronunciation -->
+
+            <!-- Left Column -->
             <div class="col-lg-5">
+
               <div class="sign-modal-preview mb-3 position-relative">
-                <span class="position-absolute top-0 start-0 m-3 badge bg-dark bg-opacity-75 text-white" id="modalSignHandType">2 Hands</span>
-                <img id="modalSignImage" src="" alt="Authentic ISL Demonstration" class="img-fluid" style="max-height: 240px; object-fit: contain;">
+                <span class="position-absolute top-0 start-0 m-3 badge bg-dark bg-opacity-75 text-white"
+                  id="modalSignHandType">2 Hands</span>
+
+                <img id="modalSignImage" src=""
+                  alt="Authentic ISL Demonstration"
+                  class="img-fluid"
+                  style="max-height: 240px; object-fit: contain;">
               </div>
 
-              <!-- Pronunciation & Audio Playback Box -->
+              <!-- Pronunciation & Audio Playback -->
               <div class="p-3 bg-light rounded-3 border mb-3">
+
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="small fw-bold text-secondary text-uppercase tracking-wide">Pronunciation</span>
-                  <span class="badge bg-white text-primary border" id="modalSignPronunciation">/eɪ/ (ay)</span>
+                  <span class="small fw-bold text-secondary text-uppercase tracking-wide">
+                    Pronunciation
+                  </span>
+
+                  <span class="badge bg-white text-primary border"
+                    id="modalSignPronunciation">/eɪ/ (ay)</span>
                 </div>
-                <button type="button" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2" id="modalSpeakBtn">
+
+                <button type="button"
+                  class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2"
+                  id="modalSpeakBtn">
+
                   <i class="bi bi-volume-up-fill fs-5" id="modalSpeakIcon"></i>
                   <span id="modalSpeakText">Audio Playback</span>
                 </button>
               </div>
 
-              <!-- Action Link to Practice Studio -->
+              <!-- Lesson Actions -->
               <div class="d-grid gap-2">
-                <a href="practice.html" id="modalPracticeBtn" class="btn btn-primary py-2 fw-bold">
-                  <i class="bi bi-camera-video me-1"></i> Practice in Studio
+
+                <a href="practice.html" id="modalPracticeBtn"
+                  class="btn btn-primary py-2 fw-bold">
+                  <i class="bi bi-camera-video me-1"></i>
+                  Practice in Studio
                 </a>
+
+                <!-- Mark as Completed Button -->
+                <button type="button"
+                  id="modalCompleteBtn"
+                  class="btn btn-success py-2 fw-bold"
+                  disabled
+                  title="Available after AI model integration">
+
+                  <i class="bi bi-check-circle me-1"></i>
+                  Mark as Completed
+
+                </button>
+
+                <small class="text-muted text-center">
+                  Lesson completion will be available after AI practice verification is integrated.
+                </small>
+
               </div>
             </div>
 
-            <!-- Right Column: Step-by-Step Hand Positioning & Linguistic Details -->
+            <!-- Right Column -->
             <div class="col-lg-7">
-              <!-- Explanation / Linguistic Meaning -->
+
+              <!-- Explanation -->
               <div class="mb-3">
                 <h6 class="fw-bold text-uppercase text-secondary small tracking-wide mb-1">
-                  <i class="bi bi-info-circle text-primary me-1"></i> Explanation & Concept
+                  <i class="bi bi-info-circle text-primary me-1"></i>
+                  Explanation & Concept
                 </h6>
+
                 <p class="text-secondary small mb-0" id="modalSignDescription"></p>
               </div>
 
-              <!-- One-Handed vs Two-Handed Variations Note -->
-              <div class="p-3 rounded-3 border bg-soft-primary mb-3" id="modalVariationsBox">
+              <!-- Hand Variations -->
+              <div class="p-3 rounded-3 border bg-soft-primary mb-3"
+                id="modalVariationsBox">
+
                 <h6 class="fw-bold small text-primary mb-1">
-                  <i class="bi bi-hand-index-thumb me-1"></i> Hand Variations (Official ISL Reference)
+                  <i class="bi bi-hand-index-thumb me-1"></i>
+                  Hand Variations (Official ISL Reference)
                 </h6>
-                <p class="smaller text-secondary mb-0" id="modalSignVariations">
+
+                <p class="smaller text-secondary mb-0"
+                  id="modalSignVariations">
                   Standard two-handed configuration.
                 </p>
               </div>
@@ -289,32 +395,48 @@
               <!-- Step-by-Step Hand Positioning -->
               <div class="mb-3">
                 <h6 class="fw-bold text-uppercase text-secondary small tracking-wide mb-2">
-                  <i class="bi bi-list-ol text-primary me-1"></i> Step-by-Step Hand Positioning
+                  <i class="bi bi-list-ol text-primary me-1"></i>
+                  Step-by-Step Hand Positioning
                 </h6>
+
                 <div id="modalSignInstructions" class="mb-0">
                   <!-- Injected via learning.js -->
                 </div>
               </div>
 
-              <!-- Non-Manual Markers / Facial Expressions -->
+              <!-- Non-Manual Markers -->
               <div class="p-2 px-3 bg-light rounded-3 border">
+
                 <div class="d-flex align-items-center gap-2 text-dark small fw-bold mb-1">
-                  <i class="bi bi-emoji-smile text-warning"></i> Non-Manual Expression / Head Marker:
+                  <i class="bi bi-emoji-smile text-warning"></i>
+                  Non-Manual Expression / Head Marker:
                 </div>
+
                 <p class="smaller text-muted mb-0" id="modalSignNonManual">
                   Maintain neutral head alignment and direct eye contact.
                 </p>
+
               </div>
             </div>
+
           </div>
         </div>
 
+        <!-- Modal Footer -->
         <div class="modal-footer bg-light px-4 py-2 border-top">
+
           <span class="smaller text-muted me-auto">
-            <i class="bi bi-shield-check text-success me-1"></i> Verified against ISLRTC Indian Sign Language curriculum.
+            <i class="bi bi-shield-check text-success me-1"></i>
+            Verified against ISLRTC Indian Sign Language curriculum.
           </span>
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+
+          <button type="button" class="btn btn-secondary btn-sm"
+            data-bs-dismiss="modal">
+            Close
+          </button>
+
         </div>
+
       </div>
     </div>
   </div>
@@ -327,5 +449,6 @@
   <script src="js/isl-data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/learning.js"></script>
+
 </body>
 </html>

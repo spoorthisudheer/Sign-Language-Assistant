@@ -70,15 +70,25 @@ function initLoginForm() {
       if (response && (response.success || response.token)) {
         SignConnect.showToast('Welcome back! Logging you in...', 'success');
 
+
         // Store user session (safe profile only, NEVER store raw password!)
-        const userProfile = response.user || {
-          id: 'usr_isl_101',
-          name: email.split('@')[0],
-          email: email,
-          role: 'Student / ISL Learner',
-          avatar: email.substring(0, 2).toUpperCase()
-        };
-        SignConnect.setUser(userProfile);
+const userProfile = response.user || {
+  id: 'usr_isl_101',
+  name: email.split('@')[0],
+  email: email,
+  role: 'Student / ISL Learner',
+  avatar: email.substring(0, 2).toUpperCase()
+};
+
+// Save the authentication token
+if (response.token) {
+  userProfile.token = response.token;
+}
+if (response.token) {
+  userProfile.token = response.token;
+}
+SignConnect.setUser(userProfile);
+
 
         setTimeout(() => {
           window.location.href = 'dashboard.html';

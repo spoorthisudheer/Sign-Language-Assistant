@@ -7,7 +7,7 @@
 window.SignConnectConfig = {
   // Configurable Flask Backend Base URL
   API_BASE_URL: localStorage.getItem('signconnect_api_url') || 'http://127.0.0.1:5000/api',
-  USE_MOCK_FALLBACK: true, // Automatically fall back to mock service if Flask is offline
+  USE_MOCK_FALLBACK: false, // Automatically fall back to mock service if Flask is offline
   APP_NAME: 'SignConnect AI',
   TAGLINE: 'Breaking Communication Barriers, One Sign at a Time.',
   IS_BACKEND_CONNECTED: false
@@ -75,11 +75,11 @@ window.SignConnect = {
       avatar: 'SL',
       stats: {
         totalLessons: 48,
-        completedLessons: 18,
-        quizzesAttempted: 12,
-        averageScore: 88,
-        hoursPracticed: 6.5,
-        currentStreak: 5
+        completedLessons: 0,
+        quizzesAttempted: 0,
+        averageScore: 0,
+        hoursPracticed: 0,
+        currentStreak: 0
       }
     };
   },
@@ -101,13 +101,18 @@ window.SignConnect = {
     const url = `${SignConnectConfig.API_BASE_URL}${endpoint}`;
 
     try {
-      const options = {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      };
+        const user = SignConnect.getUser();
+
+        const options = {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            ...(user && user.token
+              ? { 'Authorization': `Bearer ${user.token}` }
+              : {})
+          }
+        };
 
       if (data && (method === 'POST' || method === 'PUT')) {
         options.body = JSON.stringify(data);
