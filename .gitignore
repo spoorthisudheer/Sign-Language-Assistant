@@ -1,0 +1,14 @@
+# Virtual environments
+venv/
+ai_model/venv/
+backend/venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# IDE settings
+.vscode/
