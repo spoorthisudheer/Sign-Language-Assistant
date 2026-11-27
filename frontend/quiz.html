@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="css/learning.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
   <div class="app-wrapper">
@@ -37,6 +39,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="learn.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -46,6 +49,7 @@
               <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
             </a>
           </li>
+
           <li>
             <a href="practice.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -54,6 +58,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="communication.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -63,14 +68,7 @@
               <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
             </a>
           </li>
-          <li>
-            <a href="text-to-sign.html" class="sidebar-link">
-              <div class="sidebar-link-content">
-                <i class="bi bi-translate"></i>
-                <span>Text-to-Sign</span>
-              </div>
-            </a>
-          </li>
+
           <li>
             <a href="quiz.html" class="sidebar-link active">
               <div class="sidebar-link-content">
@@ -79,6 +77,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="progress.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -99,6 +98,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
               <div class="sidebar-link-content">
@@ -144,7 +144,8 @@
             <i class="bi bi-bell"></i>
           </button>
           <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
-            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">
+              SL</div>
             <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">SignConnect Learner</span>
           </a>
         </div>
@@ -159,13 +160,16 @@
               <!-- Quiz Header -->
               <div class="quiz-header">
                 <div>
-                  <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase small">ISL Mastery Challenge</span>
+                  <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase small">ISL Mastery
+                    Challenge</span>
                   <div class="small text-muted mt-1">
-                    Question <span id="quizCurrentNumber" class="fw-bold text-dark">1</span> of <span id="quizTotalCount">10</span>
+                    Question <span id="quizCurrentNumber" class="fw-bold text-dark">1</span> of <span
+                      id="quizTotalCount">10</span>
                   </div>
                 </div>
                 <div>
-                  <span class="badge bg-success-subtle text-success px-3 py-2 fw-bold" id="quizScoreTracker">Score: 0</span>
+                  <span class="badge bg-success-subtle text-success px-3 py-2 fw-bold" id="quizScoreTracker">Score:
+                    0</span>
                 </div>
               </div>
 
@@ -192,7 +196,8 @@
               </div>
 
               <!-- Feedback Explanation Box (Visible after answer) -->
-              <div id="quizFeedbackBox" class="alert alert-success d-flex align-items-start gap-3 mt-3" style="display: none;">
+              <div id="quizFeedbackBox" class="alert alert-success d-flex align-items-start gap-3 mt-3"
+                style="display: none;">
                 <div class="flex-grow-1">
                   <h6 class="fw-bold mb-1" id="quizFeedbackTitle">Correct Answer!</h6>
                   <p class="small mb-0" id="quizFeedbackExplanation">
@@ -266,4 +271,5 @@
   <script src="js/main.js"></script>
   <script src="js/quiz.js"></script>
 </body>
+
 </html>

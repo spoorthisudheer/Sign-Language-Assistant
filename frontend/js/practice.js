@@ -1,12 +1,26 @@
+
 /**
- * SignConnect AI - Sign Language Practice Module
- * Features: Target Sign, Webcam Stream (getUserMedia), Landmark Overlay, AI Integration Placeholder & Feedback
+ * SignConnect AI - Practice Studio
+ * Browser webcam + Flask API + MediaPipe hand landmark visualization.
+ * Sign classification will be integrated after model training.
  */
 
 let currentPracticeSign = null;
 let mediaStream = null;
+let predictionTimer = null;
 let isPredicting = false;
-let simulationInterval = null;
+
+const API_INTERVAL = 350;
+
+// MediaPipe hand connections (21 landmarks)
+const HAND_CONNECTIONS = [
+  [0, 1], [1, 2], [2, 3], [3, 4],
+  [0, 5], [5, 6], [6, 7], [7, 8],
+  [5, 9], [9, 10], [10, 11], [11, 12],
+  [9, 13], [13, 14], [14, 15], [15, 16],
+  [13, 17], [17, 18], [18, 19], [19, 20],
+  [0, 17]
+];
 
 document.addEventListener('DOMContentLoaded', () => {
   initTargetSign();
@@ -14,7 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initSimulationControls();
 });
 
-// Load target sign from URL param or pick random sign
+// --------------------------------------------------
+// TARGET SIGN
+// --------------------------------------------------
+
 function initTargetSign() {
   const urlParams = new URLSearchParams(window.location.search);
   const signId = urlParams.get('sign');
@@ -23,312 +40,527 @@ function initTargetSign() {
     if (signId) {
       currentPracticeSign = window.ISL_DATA.getSign(signId);
     }
+
     if (!currentPracticeSign) {
-      // Pick random sign from curriculum
-      const all = [...window.ISL_DATA.alphabets, ...window.ISL_DATA.words];
-      currentPracticeSign = all[Math.floor(Math.random() * all.length)];
+      const all = [
+        ...window.ISL_DATA.alphabets,
+        ...window.ISL_DATA.words
+      ];
+
+      currentPracticeSign =
+        all[Math.floor(Math.random() * all.length)];
     }
   }
 
   updateTargetSignUI();
 
-  // Next Random Sign Button
   const nextBtn = document.getElementById('btnNextRandomSign');
+
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
-      if (window.ISL_DATA) {
-        const all = [...window.ISL_DATA.alphabets, ...window.ISL_DATA.words];
-        currentPracticeSign = all[Math.floor(Math.random() * all.length)];
-        updateTargetSignUI();
-        resetFeedback();
-      }
+      if (!window.ISL_DATA) return;
+
+      const all = [
+        ...window.ISL_DATA.alphabets,
+        ...window.ISL_DATA.words
+      ];
+
+      currentPracticeSign =
+        all[Math.floor(Math.random() * all.length)];
+
+      updateTargetSignUI();
+      resetFeedback();
     });
   }
 
-  // Target sign selector dropdown
   const selector = document.getElementById('practiceSignSelector');
-  if (selector && window.ISL_DATA) {
-    const all = [...window.ISL_DATA.alphabets, ...window.ISL_DATA.numbers, ...window.ISL_DATA.words];
-    selector.innerHTML = all.map(s => `
-      <option value="${s.id}" ${currentPracticeSign && currentPracticeSign.id === s.id ? 'selected' : ''}>
-        [${s.category}] ${s.title}
-      </option>
-    `).join('');
 
-    selector.addEventListener('change', (e) => {
-      currentPracticeSign = window.ISL_DATA.getSign(e.target.value);
+  if (selector && window.ISL_DATA) {
+    const all = [
+      ...window.ISL_DATA.alphabets,
+      ...window.ISL_DATA.numbers,
+      ...window.ISL_DATA.words
+    ];
+
+    selector.innerHTML = all.map(sign => `
+            <option value="${sign.id}"
+                ${currentPracticeSign &&
+        currentPracticeSign.id === sign.id ? 'selected' : ''}>
+                [${sign.category}] ${sign.title}
+            </option>
+        `).join('');
+
+    selector.addEventListener('change', event => {
+      currentPracticeSign =
+        window.ISL_DATA.getSign(event.target.value);
+
       updateTargetSignUI();
       resetFeedback();
     });
   }
 }
 
-// Update Target Sign Card details
 function updateTargetSignUI() {
   if (!currentPracticeSign) return;
 
-  document.getElementById('targetSignLabel').textContent = currentPracticeSign.label;
-  document.getElementById('targetSignTitle').textContent = `${currentPracticeSign.title} (ISL)`;
-  document.getElementById('targetSignCategory').textContent = currentPracticeSign.category;
-  document.getElementById('targetSignDescription').textContent = currentPracticeSign.desc;
-  
-  const imgEl = document.getElementById('targetSignImage');
-  if (imgEl) {
-    imgEl.src = `assets/images/isl_${currentPracticeSign.id}.svg`;
-    imgEl.alt = currentPracticeSign.title;
+  document.getElementById('targetSignLabel').textContent =
+    currentPracticeSign.label;
+
+  document.getElementById('targetSignTitle').textContent =
+    `${currentPracticeSign.title} (ISL)`;
+
+  document.getElementById('targetSignCategory').textContent =
+    currentPracticeSign.category;
+
+  document.getElementById('targetSignDescription').textContent =
+    currentPracticeSign.desc;
+
+  const image = document.getElementById('targetSignImage');
+
+  if (image) {
+    image.src = `assets/images/isl_${currentPracticeSign.id}.svg`;
+    image.alt = currentPracticeSign.title;
   }
 
-  const handBadge = document.getElementById('targetSignHandBadge');
-  if (handBadge) {
-    handBadge.textContent = currentPracticeSign.twoHanded ? '2 Hands Required' : '1 Hand Required';
+  const badge = document.getElementById('targetSignHandBadge');
+
+  if (badge) {
+    badge.textContent = currentPracticeSign.twoHanded
+      ? '2 Hands Required'
+      : '1 Hand Required';
   }
 }
 
-// Webcam Stream Management via getUserMedia
+// --------------------------------------------------
+// CAMERA CONTROLS
+// --------------------------------------------------
+
 function initCameraControls() {
   const startBtn = document.getElementById('btnStartCamera');
   const stopBtn = document.getElementById('btnStopCamera');
-  const videoEl = document.getElementById('practiceVideo');
-  const placeholderEl = document.getElementById('cameraPlaceholder');
-  const statusBadge = document.getElementById('cameraStatusBadge');
 
   if (startBtn) {
-    startBtn.addEventListener('click', async () => {
-      try {
-        startBtn.disabled = true;
-        updateCameraStatus('requesting', 'Requesting camera access...');
-
-        const constraints = {
-          video: {
-            width: { ideal: 640 },
-            height: { ideal: 480 },
-            facingMode: 'user'
-          },
-          audio: false
-        };
-
-        mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-        if (videoEl) {
-          videoEl.srcObject = mediaStream;
-          videoEl.play();
-        }
-
-        if (placeholderEl) placeholderEl.style.display = 'none';
-        if (videoEl) videoEl.style.display = 'block';
-
-        updateCameraStatus('active', 'Camera Active (30 FPS)');
-        startBtn.disabled = true;
-        if (stopBtn) stopBtn.disabled = false;
-
-        SignConnect.showToast('Camera started successfully. Position hands in frame.', 'success');
-
-        // Draw simulated landmark grid on canvas overlay
-        startLandmarkOverlay();
-
-      } catch (err) {
-        console.error('Camera access error:', err);
-        updateCameraStatus('error', 'Camera Permission Denied');
-        startBtn.disabled = false;
-        SignConnect.showToast('Could not access camera: ' + err.message + '. Please allow camera permissions in your browser.', 'danger');
-      }
-    });
+    startBtn.addEventListener('click', startCamera);
   }
 
   if (stopBtn) {
-    stopBtn.addEventListener('click', () => {
-      stopCamera();
-    });
+    stopBtn.addEventListener('click', stopCamera);
   }
 }
 
+async function startCamera() {
+  const startBtn = document.getElementById('btnStartCamera');
+  const stopBtn = document.getElementById('btnStopCamera');
+
+  const video = document.getElementById('practiceVideo');
+  const placeholder = document.getElementById('cameraPlaceholder');
+
+  try {
+    startBtn.disabled = true;
+
+    updateCameraStatus('requesting', 'Requesting camera access...');
+
+    mediaStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 640 },
+        height: { ideal: 480 },
+        facingMode: 'user'
+      },
+      audio: false
+    });
+
+    video.srcObject = mediaStream;
+
+    await video.play();
+
+    placeholder.style.display = 'none';
+    video.style.display = 'block';
+
+    updateCameraStatus('active', 'Camera Active');
+
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+
+    SignConnect.showToast(
+      'Camera started successfully.',
+      'success'
+    );
+
+    // Start actual Flask + MediaPipe detection
+    startPredictionLoop();
+
+  } catch (error) {
+    console.error('Camera error:', error);
+
+    updateCameraStatus('error', 'Camera Access Failed');
+
+    startBtn.disabled = false;
+
+    SignConnect.showToast(
+      'Could not access camera: ' + error.message,
+      'danger'
+    );
+  }
+}
+
+// --------------------------------------------------
+// STOP CAMERA
+// --------------------------------------------------
+
 function stopCamera() {
+  if (predictionTimer) {
+    clearTimeout(predictionTimer);
+    predictionTimer = null;
+  }
+
   if (mediaStream) {
     mediaStream.getTracks().forEach(track => track.stop());
     mediaStream = null;
   }
 
-  const videoEl = document.getElementById('practiceVideo');
-  const placeholderEl = document.getElementById('cameraPlaceholder');
-  const startBtn = document.getElementById('btnStartCamera');
-  const stopBtn = document.getElementById('btnStopCamera');
+  const video = document.getElementById('practiceVideo');
+  const placeholder = document.getElementById('cameraPlaceholder');
 
-  if (videoEl) videoEl.style.display = 'none';
-  if (placeholderEl) placeholderEl.style.display = 'flex';
-  if (startBtn) startBtn.disabled = false;
-  if (stopBtn) stopBtn.disabled = true;
+  document.getElementById('btnStartCamera').disabled = false;
+  document.getElementById('btnStopCamera').disabled = true;
+
+  video.srcObject = null;
+  video.style.display = 'none';
+
+  placeholder.style.display = 'flex';
+
+  clearLandmarkCanvas();
 
   updateCameraStatus('off', 'Camera Disconnected');
-  stopLandmarkOverlay();
+
   resetFeedback();
 }
 
-function updateCameraStatus(state, text) {
+// --------------------------------------------------
+// CAMERA STATUS
+// --------------------------------------------------
+
+function updateCameraStatus(state, message) {
   const badge = document.getElementById('cameraStatusBadge');
+
   if (!badge) return;
 
   if (state === 'active') {
-    badge.innerHTML = '<span class="camera-live-dot"></span> ' + text;
-    badge.className = 'camera-hud-badge bg-success bg-opacity-75';
+    badge.innerHTML =
+      '<span class="camera-live-dot"></span> ' + message;
+
+    badge.className =
+      'camera-hud-badge bg-success bg-opacity-75';
+
   } else if (state === 'requesting') {
-    badge.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> ' + text;
-    badge.className = 'camera-hud-badge bg-warning bg-opacity-75 text-dark';
+    badge.textContent = message;
+
+    badge.className =
+      'camera-hud-badge bg-warning text-dark';
+
   } else if (state === 'error') {
-    badge.innerHTML = '<i class="bi bi-x-circle me-1"></i> ' + text;
-    badge.className = 'camera-hud-badge bg-danger bg-opacity-75';
+    badge.textContent = message;
+
+    badge.className =
+      'camera-hud-badge bg-danger';
+
   } else {
-    badge.innerHTML = '<i class="bi bi-camera-video-off me-1"></i> ' + text;
-    badge.className = 'camera-hud-badge bg-dark bg-opacity-75';
+    badge.textContent = message;
+
+    badge.className =
+      'camera-hud-badge bg-dark bg-opacity-75';
   }
 }
 
-// Canvas Landmark Simulation Overlay
-let animationFrameId = null;
-function startLandmarkOverlay() {
+// --------------------------------------------------
+// SEND CAMERA FRAMES TO FLASK
+// --------------------------------------------------
+
+function startPredictionLoop() {
+  if (predictionTimer) {
+    clearTimeout(predictionTimer);
+  }
+
+  const video = document.getElementById('practiceVideo');
+
+  async function processFrame() {
+    if (!mediaStream || !video || video.readyState < 2) {
+      return;
+    }
+
+    if (!isPredicting) {
+      isPredicting = true;
+
+      try {
+        const canvas = document.createElement('canvas');
+
+        canvas.width = 320;
+        canvas.height = 240;
+
+        const context = canvas.getContext('2d');
+
+        context.drawImage(video, 0, 0, 320, 240);
+
+        const imageBase64 =
+          canvas.toDataURL('image/jpeg', 0.7);
+
+        const result = await SignConnect.apiCall(
+          '/predict',
+          'POST',
+          {
+            image: imageBase64,
+            target: null
+          }
+        );
+
+        if (result && result.success) {
+          drawHandLandmarks(result.landmarks || []);
+
+          updateDetectionFeedback(result);
+
+        } else {
+          clearLandmarkCanvas();
+        }
+
+      } catch (error) {
+        console.error('Prediction API error:', error);
+
+        updateDetectionMessage(
+          'Backend connection failed. Check Flask server.'
+        );
+
+      } finally {
+        isPredicting = false;
+      }
+    }
+
+    if (mediaStream) {
+      predictionTimer = setTimeout(
+        processFrame,
+        API_INTERVAL
+      );
+    }
+  }
+
+  processFrame();
+}
+
+// --------------------------------------------------
+// DRAW ACTUAL MEDIAPIPE LANDMARKS
+// --------------------------------------------------
+
+function drawHandLandmarks(hands) {
   const canvas = document.getElementById('practiceCanvasOverlay');
+
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
 
-  function renderFrame() {
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const container = canvas.parentElement;
 
-    // Draw visual guide bounding box
-    const boxW = Math.min(canvas.width * 0.55, 320);
-    const boxH = Math.min(canvas.height * 0.7, 340);
-    const startX = (canvas.width - boxW) / 2;
-    const startY = (canvas.height - boxH) / 2;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
 
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.75)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([8, 6]);
-    ctx.strokeRect(startX, startY, boxW, boxH);
-    ctx.setLineDash([]);
-
-    // Corner guides
-    ctx.fillStyle = '#38BDF8';
-    ctx.fillRect(startX, startY, 15, 4);
-    ctx.fillRect(startX, startY, 4, 15);
-    ctx.fillRect(startX + boxW - 15, startY, 15, 4);
-    ctx.fillRect(startX + boxW - 4, startY, 4, 15);
-    ctx.fillRect(startX, startY + boxH - 4, 15, 4);
-    ctx.fillRect(startX, startY + boxH - 15, 4, 15);
-    ctx.fillRect(startX + boxW - 15, startY + boxH - 4, 15, 4);
-    ctx.fillRect(startX + boxW - 4, startY + boxH - 15, 4, 15);
-
-    animationFrameId = requestAnimationFrame(renderFrame);
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
   }
 
-  renderFrame();
+  const context = canvas.getContext('2d');
+
+  context.clearRect(0, 0, width, height);
+
+  // Tracking guide
+  const boxWidth = Math.min(width * 0.55, 320);
+  const boxHeight = Math.min(height * 0.7, 340);
+
+  context.strokeStyle = 'rgba(56, 189, 248, 0.75)';
+  context.lineWidth = 2;
+  context.setLineDash([8, 6]);
+
+  context.strokeRect(
+    (width - boxWidth) / 2,
+    (height - boxHeight) / 2,
+    boxWidth,
+    boxHeight
+  );
+
+  context.setLineDash([]);
+
+  // Actual hand landmarks
+  hands.forEach(hand => {
+    if (!hand || hand.length !== 21) return;
+
+    // Draw connections
+    context.strokeStyle = '#00E5FF';
+    context.lineWidth = 3;
+
+    HAND_CONNECTIONS.forEach(([start, end]) => {
+      const point1 = hand[start];
+      const point2 = hand[end];
+
+      context.beginPath();
+
+      context.moveTo(
+        point1.x * width,
+        point1.y * height
+      );
+
+      context.lineTo(
+        point2.x * width,
+        point2.y * height
+      );
+
+      context.stroke();
+    });
+
+    // Draw landmark points
+    hand.forEach(point => {
+      context.beginPath();
+
+      context.arc(
+        point.x * width,
+        point.y * height,
+        4,
+        0,
+        Math.PI * 2
+      );
+
+      context.fillStyle = '#FFEB3B';
+      context.fill();
+
+      context.strokeStyle = '#FFFFFF';
+      context.lineWidth = 1;
+      context.stroke();
+    });
+  });
 }
 
-function stopLandmarkOverlay() {
-  if (animationFrameId) {
-    cancelAnimationFrame(animationFrameId);
-    animationFrameId = null;
-  }
+function clearLandmarkCanvas() {
   const canvas = document.getElementById('practiceCanvasOverlay');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (!canvas) return;
+
+  const context = canvas.getContext('2d');
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// --------------------------------------------------
+// DETECTION STATUS
+// --------------------------------------------------
+
+function updateDetectionFeedback(result) {
+  if (result.landmarks_detected) {
+    updateDetectionMessage(
+      `${result.hand_count} hand(s) detected. Actual MediaPipe landmarks received.`
+    );
+  } else {
+    updateDetectionMessage(
+      'No hand detected. Position your hand inside the camera.'
+    );
   }
 }
 
-// AI Classification Integration Placeholder Function
-// Ready to receive predictions from Flask Backend: POST /api/predict
-async function classifyCurrentFrame(targetExpectedSign) {
-  // Capture frame from video element
-  const videoEl = document.getElementById('practiceVideo');
-  let frameBase64 = null;
+function updateDetectionMessage(message) {
+  const title = document.getElementById('practiceResultTitle');
+  const text = document.getElementById('practiceResultText');
+  const icon = document.getElementById('practiceResultIcon');
+  const confidence = document.getElementById('practiceConfidenceText');
+  const bar = document.getElementById('practiceConfidenceBar');
 
-  if (videoEl && mediaStream) {
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = 320;
-    tempCanvas.height = 240;
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCtx.drawImage(videoEl, 0, 0, 320, 240);
-    frameBase64 = tempCanvas.toDataURL('image/jpeg', 0.7);
+  if (title) {
+    title.textContent = 'Live Hand Detection';
+    title.className = 'fw-bold text-dark';
   }
 
-  // Call Backend API
-  const payload = {
-    image: frameBase64,
-    target: targetExpectedSign ? targetExpectedSign.label : null
-  };
+  if (text) {
+    text.textContent = message;
+  }
 
-  return await SignConnect.apiCall('/predict', 'POST', payload);
+  if (icon) {
+    icon.className = 'bi bi-hand-index-thumb fs-1 text-primary';
+  }
+
+  // No sign classification is claimed yet.
+  if (confidence) confidence.textContent = 'Not trained yet';
+
+  if (bar) {
+    bar.style.width = '0%';
+  }
 }
 
-// Simulation & Demo Controls (Allows instructors and testers to test Correct and Try Again feedback)
+// --------------------------------------------------
+// SIMULATION BUTTONS
+// --------------------------------------------------
+
 function initSimulationControls() {
-  const btnCorrect = document.getElementById('btnSimulateCorrect');
-  const btnIncorrect = document.getElementById('btnSimulateIncorrect');
+  const correct = document.getElementById('btnSimulateCorrect');
+  const incorrect = document.getElementById('btnSimulateIncorrect');
 
-  if (btnCorrect) {
-    btnCorrect.addEventListener('click', () => {
-      displayFeedback(true, currentPracticeSign ? currentPracticeSign.label : 'HELLO', 0.96);
+  if (correct) {
+    correct.addEventListener('click', () => {
+      displayFeedback(true, 'DEMO', 0.96);
     });
   }
 
-  if (btnIncorrect) {
-    btnIncorrect.addEventListener('click', () => {
-      displayFeedback(false, 'TRY AGAIN', 0.42);
+  if (incorrect) {
+    incorrect.addEventListener('click', () => {
+      displayFeedback(false, 'DEMO', 0.42);
     });
   }
 }
 
 function displayFeedback(isCorrect, predictedSign, confidence) {
-  const resultCard = document.getElementById('practiceResultCard');
-  const resultIcon = document.getElementById('practiceResultIcon');
-  const resultTitle = document.getElementById('practiceResultTitle');
-  const resultText = document.getElementById('practiceResultText');
-  const confText = document.getElementById('practiceConfidenceText');
-  const confBar = document.getElementById('practiceConfidenceBar');
-
-  if (!resultCard) return;
-
-  const confPercent = Math.round(confidence * 100);
-  if (confText) confText.textContent = `${confPercent}% Match`;
-  if (confBar) {
-    confBar.style.width = `${confPercent}%`;
-    confBar.style.backgroundColor = isCorrect ? 'var(--success)' : 'var(--danger)';
-  }
+  const title = document.getElementById('practiceResultTitle');
+  const text = document.getElementById('practiceResultText');
+  const icon = document.getElementById('practiceResultIcon');
 
   if (isCorrect) {
-    resultCard.className = 'dash-card border-success bg-soft-success p-3';
-    resultIcon.className = 'bi bi-check-circle-fill text-success fs-1';
-    resultTitle.textContent = 'Excellent! Match Confirmed!';
-    resultTitle.className = 'fw-bold text-success';
-    resultText.textContent = `Your gesture matches "${predictedSign}" accurately according to Indian Sign Language.`;
-    SignConnect.showToast('Correct sign recognized! Great job!', 'success');
+    title.textContent = 'Simulation: Correct Feedback';
+    text.textContent = 'This is a demonstration result, not an AI prediction.';
+    icon.className = 'bi bi-check-circle-fill text-success fs-1';
   } else {
-    resultCard.className = 'dash-card border-danger bg-soft-danger p-3';
-    resultIcon.className = 'bi bi-arrow-repeat text-danger fs-1';
-    resultTitle.textContent = 'Keep Trying! Position Adjusted';
-    resultTitle.className = 'fw-bold text-danger';
-    resultText.textContent = `Sign did not match the target cleanly (Confidence: ${confPercent}%). Re-align fingers according to instructions and hold steady.`;
-    SignConnect.showToast('Gesture not recognized cleanly. Try again.', 'warning');
+    title.textContent = 'Simulation: Try Again';
+    text.textContent = 'This is a demonstration result, not an AI prediction.';
+    icon.className = 'bi bi-arrow-repeat text-danger fs-1';
   }
+
+  document.getElementById('practiceConfidenceText').textContent =
+    `${Math.round(confidence * 100)}% (Simulation)`;
+
+  document.getElementById('practiceConfidenceBar').style.width =
+    `${Math.round(confidence * 100)}%`;
 }
 
-function resetFeedback() {
-  const resultCard = document.getElementById('practiceResultCard');
-  const resultIcon = document.getElementById('practiceResultIcon');
-  const resultTitle = document.getElementById('practiceResultTitle');
-  const resultText = document.getElementById('practiceResultText');
-  const confText = document.getElementById('practiceConfidenceText');
-  const confBar = document.getElementById('practiceConfidenceBar');
+// --------------------------------------------------
+// RESET FEEDBACK
+// --------------------------------------------------
 
-  if (resultCard) resultCard.className = 'dash-card p-3';
-  if (resultIcon) resultIcon.className = 'bi bi-cpu fs-1 text-primary';
-  if (resultTitle) {
-    resultTitle.textContent = 'Waiting for Live AI Recognition';
-    resultTitle.className = 'fw-bold text-dark';
+function resetFeedback() {
+  const title = document.getElementById('practiceResultTitle');
+  const text = document.getElementById('practiceResultText');
+  const icon = document.getElementById('practiceResultIcon');
+
+  if (title) {
+    title.textContent = 'Waiting for Live AI Recognition';
+    title.className = 'fw-bold text-dark';
   }
-  if (resultText) resultText.textContent = 'Turn on camera and perform the sign shown in the target box above.';
-  if (confText) confText.textContent = '0%';
-  if (confBar) {
-    confBar.style.width = '0%';
-    confBar.style.backgroundColor = 'var(--primary)';
+
+  if (text) {
+    text.textContent =
+      'Turn on camera to detect your hand landmarks.';
   }
+
+  if (icon) {
+    icon.className = 'bi bi-cpu fs-1 text-primary';
+  }
+
+  const confidence =
+    document.getElementById('practiceConfidenceText');
+
+  const bar =
+    document.getElementById('practiceConfidenceBar');
+
+  if (confidence) confidence.textContent = 'Not trained yet';
+
+  if (bar) bar.style.width = '0%';
 }

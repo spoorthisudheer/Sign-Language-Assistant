@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="css/learning.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
   <div class="app-wrapper">
@@ -37,6 +39,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="learn.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -46,6 +49,7 @@
               <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
             </a>
           </li>
+
           <li>
             <a href="practice.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -54,6 +58,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="communication.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -63,14 +68,7 @@
               <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
             </a>
           </li>
-          <li>
-            <a href="text-to-sign.html" class="sidebar-link active">
-              <div class="sidebar-link-content">
-                <i class="bi bi-translate"></i>
-                <span>Text-to-Sign</span>
-              </div>
-            </a>
-          </li>
+
           <li>
             <a href="quiz.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -79,6 +77,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="progress.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -99,6 +98,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
               <div class="sidebar-link-content">
@@ -144,7 +144,8 @@
             <i class="bi bi-bell"></i>
           </button>
           <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
-            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">
+              SL</div>
             <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">SignConnect Learner</span>
           </a>
         </div>
@@ -168,7 +169,10 @@
           <div>
             <h6 class="fw-bold mb-1 text-dark">Linguistic Note on Sign Language Grammar</h6>
             <p class="small text-secondary mb-0">
-              Natural Indian Sign Language has its own rich grammatical structure (Topic-Comment order, spatial indexing, facial non-manual markers) which differs fundamentally from English word order. Sequential word cards offer lexical representation for learning and assistive reference; words not in the core vocabulary are systematically broken down into finger-spelled ISL alphabets.
+              Natural Indian Sign Language has its own rich grammatical structure (Topic-Comment order, spatial
+              indexing, facial non-manual markers) which differs fundamentally from English word order. Sequential word
+              cards offer lexical representation for learning and assistive reference; words not in the core vocabulary
+              are systematically broken down into finger-spelled ISL alphabets.
             </p>
           </div>
         </div>
@@ -180,7 +184,8 @@
               Enter English Sentence or Phrase:
             </label>
             <div class="input-group input-group-lg mb-3">
-              <input type="text" class="form-control" id="textSignInput" placeholder="e.g. HELLO HOW ARE YOU, THANK YOU, WATER, HELP" value="HELLO HOW ARE YOU" required>
+              <input type="text" class="form-control" id="textSignInput"
+                placeholder="e.g. HELLO HOW ARE YOU, THANK YOU, WATER, HELP" value="HELLO HOW ARE YOU" required>
               <button class="btn btn-primary px-4" type="submit">
                 <i class="bi bi-arrow-repeat me-1"></i> Convert to Sign
               </button>
@@ -193,19 +198,24 @@
           <!-- Quick Preset Pills -->
           <div class="d-flex align-items-center gap-2 flex-wrap">
             <span class="small fw-bold text-secondary me-1">Try Sample Sentences:</span>
-            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="HELLO HOW ARE YOU">
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill"
+              data-text="HELLO HOW ARE YOU">
               "HELLO HOW ARE YOU"
             </button>
-            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="THANK YOU">
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill"
+              data-text="THANK YOU">
               "THANK YOU"
             </button>
-            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="PLEASE HELP">
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill"
+              data-text="PLEASE HELP">
               "PLEASE HELP"
             </button>
-            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="WATER AND FOOD">
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill"
+              data-text="WATER AND FOOD">
               "WATER AND FOOD"
             </button>
-            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill" data-text="WHAT IS YOUR NAME">
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill preset-sentence-pill"
+              data-text="WHAT IS YOUR NAME">
               "WHAT IS YOUR NAME"
             </button>
           </div>
@@ -224,7 +234,8 @@
               <button type="button" class="btn btn-primary btn-sm" id="btnPlaySignSequence">
                 <i class="bi bi-play-fill me-1"></i> Play Sequence
               </button>
-              <button type="button" class="btn btn-outline-secondary btn-sm" id="btnPauseSignSequence" style="display: none;">
+              <button type="button" class="btn btn-outline-secondary btn-sm" id="btnPauseSignSequence"
+                style="display: none;">
                 <i class="bi bi-pause-fill me-1"></i> Pause
               </button>
               <div class="d-flex align-items-center gap-1 ms-2">
@@ -244,9 +255,11 @@
           </div>
 
           <!-- Unsupported Warning Notification (Conditional) -->
-          <div class="alert alert-warning border-0 rounded-3 small mb-3" id="unsupportedNoticeBox" style="display: none;">
+          <div class="alert alert-warning border-0 rounded-3 small mb-3" id="unsupportedNoticeBox"
+            style="display: none;">
             <i class="bi bi-exclamation-triangle-fill me-2 text-warning"></i>
-            Some words in your phrase are not yet in our pre-recorded ISL dictionary. They are dynamically broken down into verified Indian Sign Language finger-spelling alphabets.
+            Some words in your phrase are not yet in our pre-recorded ISL dictionary. They are dynamically broken down
+            into verified Indian Sign Language finger-spelling alphabets.
           </div>
 
           <!-- Horizontal Sign Demonstration Cards Scroller -->
@@ -269,4 +282,5 @@
   <script src="js/main.js"></script>
   <script src="js/text-to-sign.js"></script>
 </body>
+
 </html>

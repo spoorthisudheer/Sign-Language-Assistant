@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="css/learning.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
   <div class="app-wrapper">
@@ -37,6 +39,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="learn.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -46,6 +49,7 @@
               <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
             </a>
           </li>
+
           <li>
             <a href="practice.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -54,6 +58,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="communication.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -63,14 +68,7 @@
               <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
             </a>
           </li>
-          <li>
-            <a href="text-to-sign.html" class="sidebar-link">
-              <div class="sidebar-link-content">
-                <i class="bi bi-translate"></i>
-                <span>Text-to-Sign</span>
-              </div>
-            </a>
-          </li>
+
           <li>
             <a href="quiz.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -79,6 +77,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="progress.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -99,6 +98,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
               <div class="sidebar-link-content">
@@ -144,7 +144,8 @@
             <i class="bi bi-bell"></i>
           </button>
           <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
-            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">
+              SL</div>
             <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">SignConnect Learner</span>
           </a>
         </div>
@@ -156,10 +157,12 @@
           <!-- Left Column: User Summary Card -->
           <div class="col-lg-4">
             <div class="dash-card text-center mb-4">
-              <div class="sidebar-user-avatar mx-auto mb-3" style="width: 80px; height: 80px; font-size: 1.85rem;">SL</div>
+              <div class="sidebar-user-avatar mx-auto mb-3" style="width: 80px; height: 80px; font-size: 1.85rem;">SL
+              </div>
               <h4 class="fw-bold mb-1" id="profileCardName">SignConnect Learner</h4>
               <p class="text-secondary small mb-2" id="profileCardEmail">learner@signconnect.ai</p>
-              <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill small mb-4">Student / ISL Learner</span>
+              <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill small mb-4">Student / ISL
+                Learner</span>
 
               <div class="border-top pt-3 text-start">
                 <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
@@ -192,7 +195,8 @@
               <form id="apiConfigForm">
                 <div class="mb-3">
                   <label for="apiUrlInput" class="form-label small fw-bold">Flask Base URL:</label>
-                  <input type="text" class="form-control form-control-sm" id="apiUrlInput" value="http://127.0.0.1:5000/api">
+                  <input type="text" class="form-control form-control-sm" id="apiUrlInput"
+                    value="http://127.0.0.1:5000/api">
                 </div>
                 <button type="submit" class="btn btn-outline-primary btn-sm w-100 mb-2">
                   <i class="bi bi-check-circle"></i> Save API Endpoint
@@ -261,11 +265,13 @@
                   </div>
                   <div class="col-md-6">
                     <label for="newPassword" class="form-label small fw-bold">New Password</label>
-                    <input type="password" class="form-control" id="newPassword" placeholder="Minimum 8 characters" required>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Minimum 8 characters"
+                      required>
                   </div>
                   <div class="col-md-6">
                     <label for="confirmNewPassword" class="form-label small fw-bold">Confirm New Password</label>
-                    <input type="password" class="form-control" id="confirmNewPassword" placeholder="Re-enter new password" required>
+                    <input type="password" class="form-control" id="confirmNewPassword"
+                      placeholder="Re-enter new password" required>
                   </div>
                 </div>
 
@@ -372,4 +378,5 @@
     });
   </script>
 </body>
+
 </html>

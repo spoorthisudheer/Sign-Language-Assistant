@@ -1,7 +1,7 @@
 /**
  * SignConnect AI - Real-Time Communication Module
- * Connects webcam via getUserMedia, accumulates sentences, provides Web Speech API voice output,
- * maintains communication logs, and exposes backend integration points for POST /api/predict.
+ * Webcam + Flask MediaPipe hand landmark detection.
+ * Actual sign classification requires a trained model.
  */
 
 let commStream = null;
@@ -10,16 +10,29 @@ let communicationHistory = [];
 let isLiveStreaming = false;
 let pollingInterval = null;
 
+const HAND_CONNECTIONS = [
+  [0, 1], [1, 2], [2, 3], [3, 4],
+  [0, 5], [5, 6], [6, 7], [7, 8],
+  [5, 9], [9, 10], [10, 11], [11, 12],
+  [9, 13], [13, 14], [14, 15], [15, 16],
+  [13, 17], [17, 18], [18, 19], [19, 20],
+  [0, 17]
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   initCommCamera();
   initCommunicationControls();
   renderHistory();
 });
 
-// Webcam initialization
+// --------------------------------------------------
+// CAMERA INITIALIZATION
+// --------------------------------------------------
+
 function initCommCamera() {
   const startBtn = document.getElementById('btnStartCommCamera');
   const stopBtn = document.getElementById('btnStopCommCamera');
+
   const video = document.getElementById('commVideo');
   const placeholder = document.getElementById('commCameraPlaceholder');
 
@@ -27,45 +40,66 @@ function initCommCamera() {
     startBtn.addEventListener('click', async () => {
       try {
         startBtn.disabled = true;
+
         updateCommCameraBadge('connecting', 'Starting stream...');
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+        commStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            facingMode: 'user'
+          },
           audio: false
         });
 
-        commStream = stream;
-        if (video) {
-          video.srcObject = stream;
-          video.play();
-          video.style.display = 'block';
-        }
-        if (placeholder) placeholder.style.display = 'none';
+        video.srcObject = commStream;
+        video.style.display = 'block';
 
-        updateCommCameraBadge('active', 'Live Stream Active (30 FPS)');
-        if (stopBtn) stopBtn.disabled = false;
+        await video.play();
+
+        if (placeholder) {
+          placeholder.style.display = 'none';
+        }
+
         isLiveStreaming = true;
 
-        SignConnect.showToast('Webcam active. AI recognition stream ready.', 'success');
+        updateCommCameraBadge('active', 'Live Stream Active');
 
-        // Draw HUD overlay grid on canvas
+        if (stopBtn) {
+          stopBtn.disabled = false;
+        }
+
+        SignConnect.showToast(
+          'Webcam started. Connecting AI hand detection...',
+          'success'
+        );
+
         drawCommOverlay();
+        startCommPredictionLoop();
 
       } catch (err) {
-        console.error('Camera error in communication module:', err);
+        console.error('Communication camera error:', err);
+
         updateCommCameraBadge('error', 'Camera Blocked');
+
         startBtn.disabled = false;
-        SignConnect.showToast('Camera error: ' + err.message, 'danger');
+
+        SignConnect.showToast(
+          'Camera error: ' + err.message,
+          'danger'
+        );
       }
     });
   }
 
   if (stopBtn) {
-    stopBtn.addEventListener('click', () => {
-      stopCommCamera();
-    });
+    stopBtn.addEventListener('click', stopCommCamera);
   }
 }
+
+// --------------------------------------------------
+// STOP CAMERA
+// --------------------------------------------------
 
 function stopCommCamera() {
   if (commStream) {
@@ -73,197 +107,385 @@ function stopCommCamera() {
     commStream = null;
   }
 
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+  }
+
   const video = document.getElementById('commVideo');
   const placeholder = document.getElementById('commCameraPlaceholder');
+
   const startBtn = document.getElementById('btnStartCommCamera');
   const stopBtn = document.getElementById('btnStopCommCamera');
 
-  if (video) video.style.display = 'none';
-  if (placeholder) placeholder.style.display = 'flex';
+  if (video) {
+    video.pause();
+    video.srcObject = null;
+    video.style.display = 'none';
+  }
+
+  if (placeholder) {
+    placeholder.style.display = 'flex';
+  }
+
   if (startBtn) startBtn.disabled = false;
   if (stopBtn) stopBtn.disabled = true;
 
   isLiveStreaming = false;
+
   updateCommCameraBadge('off', 'Camera Inactive');
   clearCommOverlay();
 }
 
+// --------------------------------------------------
+// CAMERA STATUS
+// --------------------------------------------------
+
 function updateCommCameraBadge(state, text) {
   const badge = document.getElementById('commCameraBadge');
+
   if (!badge) return;
 
   if (state === 'active') {
-    badge.innerHTML = '<span class="camera-live-dot"></span> ' + text;
-    badge.className = 'camera-hud-badge bg-success bg-opacity-75';
+    badge.innerHTML =
+      '<span class="camera-live-dot"></span> ' + text;
+
+    badge.className =
+      'camera-hud-badge bg-success bg-opacity-75';
+
   } else if (state === 'connecting') {
-    badge.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> ' + text;
-    badge.className = 'camera-hud-badge bg-warning bg-opacity-75 text-dark';
+    badge.textContent = text;
+    badge.className =
+      'camera-hud-badge bg-warning bg-opacity-75 text-dark';
+
   } else if (state === 'error') {
-    badge.innerHTML = '<i class="bi bi-exclamation-circle me-1"></i> ' + text;
-    badge.className = 'camera-hud-badge bg-danger bg-opacity-75';
+    badge.textContent = text;
+    badge.className =
+      'camera-hud-badge bg-danger bg-opacity-75';
+
   } else {
-    badge.innerHTML = '<i class="bi bi-camera-video-off me-1"></i> ' + text;
-    badge.className = 'camera-hud-badge bg-dark bg-opacity-75';
+    badge.textContent = text;
+    badge.className =
+      'camera-hud-badge bg-dark bg-opacity-75';
   }
 }
 
-// Canvas HUD overlay
+// --------------------------------------------------
+// CANVAS SETUP
+// --------------------------------------------------
+
 function drawCommOverlay() {
   const canvas = document.getElementById('commCanvasOverlay');
+
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.parentElement.clientWidth;
-  canvas.height = canvas.parentElement.clientHeight;
 
-  ctx.strokeStyle = 'rgba(79, 70, 229, 0.4)';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4, 4]);
+  resizeCommCanvas();
+}
 
-  // Center alignment crosshair
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-  ctx.beginPath();
-  ctx.moveTo(cx - 30, cy);
-  ctx.lineTo(cx + 30, cy);
-  ctx.moveTo(cx, cy - 30);
-  ctx.lineTo(cx, cy + 30);
-  ctx.stroke();
+function resizeCommCanvas() {
+  const canvas = document.getElementById('commCanvasOverlay');
+
+  if (!canvas) return;
+
+  const rect = canvas.getBoundingClientRect();
+
+  canvas.width = rect.width;
+  canvas.height = rect.height;
 }
 
 function clearCommOverlay() {
   const canvas = document.getElementById('commCanvasOverlay');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-// Controls: Speak Text, Clear Text, Copy Text, and Demonstration Testing
+// --------------------------------------------------
+// DRAW ACTUAL MEDIAPIPE LANDMARKS
+// --------------------------------------------------
+
+function drawHandLandmarks(allHands) {
+  const canvas = document.getElementById('commCanvasOverlay');
+
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  resizeCommCanvas();
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (!allHands || allHands.length === 0) {
+    return;
+  }
+
+  allHands.forEach(hand => {
+    if (!Array.isArray(hand) || hand.length !== 21) return;
+
+    // Draw connecting lines
+    ctx.strokeStyle = '#00E5FF';
+    ctx.lineWidth = 3;
+
+    HAND_CONNECTIONS.forEach(([start, end]) => {
+      const point1 = hand[start];
+      const point2 = hand[end];
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        point1.x * canvas.width,
+        point1.y * canvas.height
+      );
+
+      ctx.lineTo(
+        point2.x * canvas.width,
+        point2.y * canvas.height
+      );
+
+      ctx.stroke();
+    });
+
+    // Draw landmark points
+    hand.forEach(point => {
+      ctx.beginPath();
+
+      ctx.arc(
+        point.x * canvas.width,
+        point.y * canvas.height,
+        5,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle = '#FF4081';
+      ctx.fill();
+
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+  });
+}
+
+// --------------------------------------------------
+// SEND WEBCAM FRAMES TO FLASK
+// --------------------------------------------------
+
+function startCommPredictionLoop() {
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+  }
+
+  pollingInterval = setInterval(async () => {
+    if (!isLiveStreaming) return;
+
+    const video = document.getElementById('commVideo');
+
+    if (!video || !video.videoWidth || !video.videoHeight) {
+      return;
+    }
+
+    try {
+      const captureCanvas = document.createElement('canvas');
+
+      captureCanvas.width = video.videoWidth;
+      captureCanvas.height = video.videoHeight;
+
+      const captureContext = captureCanvas.getContext('2d');
+
+      captureContext.drawImage(
+        video,
+        0,
+        0,
+        captureCanvas.width,
+        captureCanvas.height
+      );
+
+      const imageData = captureCanvas.toDataURL('image/jpeg', 0.7);
+
+      const response = await SignConnect.apiCall(
+        '/predict',
+        'POST',
+        {
+          image: imageData,
+          target: null
+        }
+      );
+
+      if (!isLiveStreaming) return;
+
+      const result = response.data || response;
+
+      if (result.landmarks_detected && result.landmarks) {
+        drawHandLandmarks(result.landmarks);
+      } else {
+        clearCommOverlay();
+      }
+
+    } catch (error) {
+      console.error('Hand detection API error:', error);
+    }
+
+  }, 350);
+}
+
+// --------------------------------------------------
+// COMMUNICATION CONTROLS
+// --------------------------------------------------
+
 function initCommunicationControls() {
   const btnSpeak = document.getElementById('btnSpeakSentence');
   const btnClear = document.getElementById('btnClearSentence');
   const btnCopy = document.getElementById('btnCopySentence');
   const btnTestSign = document.getElementById('btnTestSamplePrediction');
 
-  // Text-to-Speech via Web Speech API
   if (btnSpeak) {
     btnSpeak.addEventListener('click', () => {
       const text = getFullSentenceText();
+
       if (!text) {
-        SignConnect.showToast('No recognized text to speak yet.', 'warning');
+        SignConnect.showToast(
+          'No recognized text to speak yet.',
+          'warning'
+        );
         return;
       }
+
       btnSpeak.disabled = true;
-      btnSpeak.innerHTML = '<span class="spinner-grow spinner-grow-sm me-2"></span> Speaking...';
 
       SignConnect.speakText(text, () => {
         btnSpeak.disabled = false;
-        btnSpeak.innerHTML = '<i class="bi bi-volume-up-fill me-2"></i> Speak Sentence';
       });
     });
   }
 
-  // Clear Sentence
   if (btnClear) {
     btnClear.addEventListener('click', () => {
       recognizedSentence = [];
       updateSentenceUI();
-      SignConnect.showToast('Recognized text cleared.', 'info');
+
+      SignConnect.showToast(
+        'Recognized text cleared.',
+        'info'
+      );
     });
   }
 
-  // Copy Sentence
   if (btnCopy) {
     btnCopy.addEventListener('click', () => {
       const text = getFullSentenceText();
+
       if (!text) return;
+
       navigator.clipboard.writeText(text).then(() => {
-        SignConnect.showToast('Sentence copied to clipboard!', 'success');
+        SignConnect.showToast(
+          'Sentence copied!',
+          'success'
+        );
       });
     });
   }
 
-  // Sample Prediction Trigger for presentation and evaluation
+  // Demonstration button only - not actual AI recognition
   if (btnTestSign) {
-    const sampleSigns = ['HELLO', 'THANK YOU', 'HOW ARE YOU', 'PLEASE', 'HELP', 'YES', 'WATER'];
-    let idx = 0;
+    const sampleSigns = [
+      'HELLO',
+      'THANK YOU',
+      'HOW ARE YOU',
+      'PLEASE',
+      'HELP',
+      'YES',
+      'WATER'
+    ];
+
+    let index = 0;
+
     btnTestSign.addEventListener('click', () => {
-      const chosen = sampleSigns[idx % sampleSigns.length];
-      idx++;
-      const confidence = (0.92 + Math.random() * 0.07).toFixed(2);
-      
-      // Receive prediction into UI
+      const chosen = sampleSigns[index % sampleSigns.length];
+
+      index++;
+
       handleIncomingPrediction({
         prediction: chosen,
-        confidence: parseFloat(confidence)
+        confidence: 0.95
       });
     });
   }
 }
 
-// Get compiled sentence string
+// --------------------------------------------------
+// SENTENCE DISPLAY
+// --------------------------------------------------
+
 function getFullSentenceText() {
   return recognizedSentence.join(' ').trim();
 }
 
-// Update Sentence display area
 function updateSentenceUI() {
   const outputEl = document.getElementById('commSentenceOutput');
   const wordCountBadge = document.getElementById('commWordCountBadge');
-  
+
   if (outputEl) {
-    if (recognizedSentence.length === 0) {
-      outputEl.innerHTML = '<span class="text-muted fst-italic">Recognized words will accumulate here into a complete sentence...</span>';
-    } else {
-      outputEl.textContent = recognizedSentence.join(' ');
-    }
+    outputEl.textContent = recognizedSentence.length
+      ? recognizedSentence.join(' ')
+      : 'Recognized words will accumulate here into a complete sentence...';
   }
 
   if (wordCountBadge) {
-    wordCountBadge.textContent = `${recognizedSentence.length} Words`;
+    wordCountBadge.textContent =
+      `${recognizedSentence.length} Words`;
   }
 }
 
-/**
- * CORE BACKEND INTEGRATION POINT
- * This function processes prediction payloads received from Flask POST /api/predict
- * Format: { "prediction": "HELLO", "confidence": 0.95 }
- */
-window.handleIncomingPrediction = function(predictionData) {
+// --------------------------------------------------
+// DISPLAY PREDICTIONS
+// --------------------------------------------------
+
+window.handleIncomingPrediction = function (predictionData) {
   if (!predictionData || !predictionData.prediction) return;
 
   const sign = predictionData.prediction.toUpperCase();
-  const conf = predictionData.confidence || 0.95;
+  const confidence = predictionData.confidence || 0.95;
 
-  // Update Billboard Card
   const signEl = document.getElementById('commRecognizedSign');
   const confBar = document.getElementById('commConfidenceBar');
   const confText = document.getElementById('commConfidenceText');
 
   if (signEl) signEl.textContent = sign;
-  if (confBar) confBar.style.width = `${Math.round(conf * 100)}%`;
-  if (confText) confText.textContent = `${Math.round(conf * 100)}%`;
 
-  // Avoid repetitive spam: only append if distinct from last word or after a short pause
+  if (confBar) {
+    confBar.style.width =
+      `${Math.round(confidence * 100)}%`;
+  }
+
+  if (confText) {
+    confText.textContent =
+      `${Math.round(confidence * 100)}%`;
+  }
+
   const lastWord = recognizedSentence[recognizedSentence.length - 1];
+
   if (lastWord !== sign) {
     recognizedSentence.push(sign);
     updateSentenceUI();
-
-    // Log to communication history
-    addToHistory(sign, conf);
+    addToHistory(sign, confidence);
   }
 };
 
-// Add entry to communication history log
+// --------------------------------------------------
+// COMMUNICATION HISTORY
+// --------------------------------------------------
+
 function addToHistory(sign, confidence) {
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const time = new Date().toLocaleTimeString();
 
   communicationHistory.unshift({
-    sign: sign,
+    sign,
     confidence: Math.round(confidence * 100),
-    time: timeStr
+    time
   });
 
   if (communicationHistory.length > 20) {
@@ -274,16 +496,18 @@ function addToHistory(sign, confidence) {
 }
 
 function renderHistory() {
-  const container = document.getElementById('commHistoryContainer');
+  const container =
+    document.getElementById('commHistoryContainer');
+
   if (!container) return;
 
   if (communicationHistory.length === 0) {
     container.innerHTML = `
       <div class="text-center py-4 text-muted small">
-        <i class="bi bi-clock-history fs-3 d-block mb-1 text-secondary"></i>
-        No communication logs yet. Gestures detected will be recorded here.
+        No communication logs yet.
       </div>
     `;
+
     return;
   }
 
@@ -291,9 +515,14 @@ function renderHistory() {
     <div class="comm-history-item">
       <div>
         <span class="badge bg-primary me-2">${item.sign}</span>
-        <span class="text-secondary small">${item.confidence}% Match</span>
+        <span class="text-secondary small">
+          ${item.confidence}% Match
+        </span>
       </div>
-      <div class="text-muted small">${item.time}</div>
+
+      <div class="text-muted small">
+        ${item.time}
+      </div>
     </div>
   `).join('');
 }

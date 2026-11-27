@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,570 +20,529 @@
 
 <body>
 
-<div class="app-wrapper">
+    <div class="app-wrapper">
 
-    <!-- SIDEBAR -->
-    <aside class="app-sidebar" id="appSidebar">
+        <!-- SIDEBAR -->
+        <aside class="app-sidebar" id="appSidebar">
 
-        <div class="sidebar-brand">
-            <a href="dashboard.html">
-                <img src="assets/icons/logo.svg" alt="SignConnect AI">
-            </a>
-        </div>
-
-        <div class="sidebar-menu-wrapper">
-
-            <div class="sidebar-heading">Main Navigation</div>
-
-            <ul class="sidebar-nav">
-
-                <li>
-                    <a href="dashboard.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Dashboard</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="learn.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-book-half"></i>
-                            <span>Learn Sign Language</span>
-                        </div>
-                        <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="practice.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-camera-video"></i>
-                            <span>Practice</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="communication.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-chat-dots-fill"></i>
-                            <span>Real-Time Comm</span>
-                        </div>
-                        <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="text-to-sign.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-translate"></i>
-                            <span>Text-to-Sign</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="quiz.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-trophy"></i>
-                            <span>Quizzes</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="progress.html" class="sidebar-link active">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-graph-up-arrow"></i>
-                            <span>My Progress</span>
-                        </div>
-                    </a>
-                </li>
-
-            </ul>
-
-            <div class="sidebar-heading">Account & Settings</div>
-
-            <ul class="sidebar-nav">
-
-                <li>
-                    <a href="profile.html" class="sidebar-link">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-person-circle"></i>
-                            <span>Profile</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
-                        <div class="sidebar-link-content">
-                            <i class="bi bi-box-arrow-right text-danger"></i>
-                            <span>Logout</span>
-                        </div>
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="sidebar-footer">
-            <div class="sidebar-user">
-
-                <div class="sidebar-user-avatar">SL</div>
-
-                <div class="sidebar-user-info">
-                    <div class="sidebar-user-name">SignConnect Learner</div>
-                    <div class="sidebar-user-role">Student / ISL Learner</div>
-                </div>
-
-            </div>
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN CONTENT -->
-    <main class="app-main">
-
-        <!-- TOPBAR -->
-        <header class="app-topbar">
-
-            <div class="topbar-left">
-
-                <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
-                    <i class="bi bi-list"></i>
-                </button>
-
-                <div class="topbar-breadcrumb">
-                    <a href="dashboard.html" class="text-secondary text-decoration-none">SignConnect</a>
-                    <i class="bi bi-chevron-right text-muted small"></i>
-                    <span class="current">My Progress</span>
-                </div>
-
-            </div>
-
-            <div class="topbar-right">
-
-                <div class="backend-status-pill" id="backendStatusPill" title="Backend Status">
-                    <span class="status-dot"></span>
-                    Flask API: Ready
-                </div>
-
-                <button class="topbar-icon-btn" title="Notifications">
-                    <i class="bi bi-bell"></i>
-                </button>
-
-                <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="sidebar-user-avatar topbar-user-avatar"
-                         style="width:36px;height:36px;font-size:0.85rem;">
-                        SL
-                    </div>
-
-                    <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">
-                        SignConnect Learner
-                    </span>
+            <div class="sidebar-brand">
+                <a href="dashboard.html">
+                    <img src="assets/icons/logo.svg" alt="SignConnect AI">
                 </a>
+            </div>
+
+            <div class="sidebar-menu-wrapper">
+
+                <div class="sidebar-heading">Main Navigation</div>
+
+                <ul class="sidebar-nav">
+
+                    <li>
+                        <a href="dashboard.html" class="sidebar-link">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="learn.html" class="sidebar-link">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-book-half"></i>
+                                <span>Learn Sign Language</span>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="practice.html" class="sidebar-link">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-camera-video"></i>
+                                <span>Practice</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="communication.html" class="sidebar-link">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-chat-dots-fill"></i>
+                                <span>Real-Time Comm</span>
+                            </div>
+                            <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
+                        </a>
+                    </li>
+
+                    <!-- Text-to-Sign navigation removed -->
+
+                    <li>
+                        <a href="quiz.html" class="sidebar-link">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-trophy"></i>
+                                <span>Quizzes</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="progress.html" class="sidebar-link active">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <span>My Progress</span>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="sidebar-heading">Account & Settings</div>
+
+                <ul class="sidebar-nav">
+
+                    <li>
+                        <a href="profile.html" class="sidebar-link">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-person-circle"></i>
+                                <span>Profile</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
+                            <div class="sidebar-link-content">
+                                <i class="bi bi-box-arrow-right text-danger"></i>
+                                <span>Logout</span>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
 
             </div>
 
-        </header>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
 
+                    <div class="sidebar-user-avatar">SL</div>
 
-        <!-- PAGE CONTENT -->
-        <div class="page-content">
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">SignConnect Learner</div>
+                        <div class="sidebar-user-role">Student / ISL Learner</div>
+                    </div>
 
-            <!-- PAGE HEADER -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-
-                <div>
-                    <h1 class="page-header-title">Learning Progress & Analytics</h1>
-
-                    <p class="page-header-desc">
-                        Track your ISL milestone completion, camera gesture consistency, and quiz performance.
-                    </p>
                 </div>
+            </div>
 
-                <div>
-                    <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
-                        <i class="bi bi-printer me-1"></i>
-                        Print Report
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="app-main">
+
+            <!-- TOPBAR -->
+            <header class="app-topbar">
+
+                <div class="topbar-left">
+
+                    <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+                        <i class="bi bi-list"></i>
                     </button>
+
+                    <div class="topbar-breadcrumb">
+                        <a href="dashboard.html" class="text-secondary text-decoration-none">SignConnect</a>
+                        <i class="bi bi-chevron-right text-muted small"></i>
+                        <span class="current">My Progress</span>
+                    </div>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="backend-status-pill" id="backendStatusPill" title="Backend Status">
+                        <span class="status-dot"></span>
+                        Flask API: Ready
+                    </div>
+
+                    <button class="topbar-icon-btn" title="Notifications">
+                        <i class="bi bi-bell"></i>
+                    </button>
+
+                    <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                        <div class="sidebar-user-avatar topbar-user-avatar"
+                            style="width:36px;height:36px;font-size:0.85rem;">
+                            SL
+                        </div>
+
+                        <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">
+                            SignConnect Learner
+                        </span>
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+
+                <!-- PAGE HEADER -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+                    <div>
+                        <h1 class="page-header-title">Learning Progress & Analytics</h1>
+
+                        <p class="page-header-desc">
+                            Track your ISL milestone completion, camera gesture consistency, and quiz performance.
+                        </p>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                            <i class="bi bi-printer me-1"></i>
+                            Print Report
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- PROGRESS METRIC CARDS -->
+                <div class="row g-4 mb-4">
+
+                    <!-- TOTAL LESSONS -->
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="metric-card">
+
+                            <div class="metric-info">
+                                <div class="metric-label">Total Lessons</div>
+                                <div class="metric-value" id="progTotalLessons">48</div>
+
+                                <div class="metric-footer text-primary">
+                                    <i class="bi bi-journals"></i>
+                                    Standard ISL Curriculum
+                                </div>
+                            </div>
+
+                            <div class="metric-icon-box bg-soft-primary text-primary">
+                                <i class="bi bi-book"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- COMPLETED LESSONS -->
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="metric-card">
+
+                            <div class="metric-info">
+                                <div class="metric-label">Lessons Mastered</div>
+                                <div class="metric-value" id="progCompletedLessons">0</div>
+
+                                <div class="metric-footer text-success">
+                                    <i class="bi bi-check2-circle"></i>
+                                    <span id="progCompletedSummary">0 of 48 Signs</span>
+                                </div>
+                            </div>
+
+                            <div class="metric-icon-box bg-soft-success text-success">
+                                <i class="bi bi-mortarboard-fill"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- OVERALL COMPLETION -->
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="metric-card">
+
+                            <div class="metric-info">
+                                <div class="metric-label">Overall Completion</div>
+                                <div class="metric-value" id="progOverallPercent">0%</div>
+
+                                <div class="metric-footer text-info">
+                                    <i class="bi bi-speedometer2"></i>
+                                    Learning Progress
+                                </div>
+                            </div>
+
+                            <div class="metric-icon-box bg-soft-primary text-primary">
+                                <i class="bi bi-percent"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- LEARNING STREAK -->
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="metric-card">
+
+                            <div class="metric-info">
+                                <div class="metric-label">Learning Streak</div>
+                                <div class="metric-value" id="progStreakDays">0 Days</div>
+
+                                <div class="metric-footer text-warning">
+                                    <i class="bi bi-fire"></i>
+                                    Learning Activity
+                                </div>
+                            </div>
+
+                            <div class="metric-icon-box bg-soft-warning text-warning">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- CHARTS -->
+                <div class="row g-4 mb-4">
+
+                    <!-- WEEKLY ACTIVITY -->
+                    <div class="col-lg-7">
+                        <div class="dash-card h-100 mb-0">
+
+                            <div class="dash-card-header">
+                                <h5 class="dash-card-title">
+                                    <i class="bi bi-bar-chart-fill text-primary"></i>
+                                    Weekly Learning Activity
+                                </h5>
+
+                                <span class="badge bg-light text-secondary border small">
+                                    Last 7 Days
+                                </span>
+                            </div>
+
+                            <div style="height:280px;position:relative;">
+                                <canvas id="weeklyActivityChart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- CATEGORY MASTERY -->
+                    <div class="col-lg-5">
+                        <div class="dash-card h-100 mb-0">
+
+                            <div class="dash-card-header">
+                                <h5 class="dash-card-title">
+                                    <i class="bi bi-pie-chart-fill text-primary"></i>
+                                    Category Mastery
+                                </h5>
+
+                                <span class="badge bg-light text-secondary border small">
+                                    Accuracy Rate
+                                </span>
+                            </div>
+
+                            <div style="height:280px;position:relative;">
+                                <canvas id="categoryMasteryChart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ACHIEVEMENT BADGES -->
+                <div class="dash-card mb-4">
+
+                    <div class="dash-card-header">
+                        <h5 class="dash-card-title">
+                            <i class="bi bi-award-fill text-warning"></i>
+                            Achievement Badges
+                        </h5>
+
+                        <span class="badge bg-primary text-white">Achievements</span>
+                    </div>
+
+
+                    <div class="row g-3">
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="badge-card">
+
+                                <div class="badge-icon-box bg-soft-success text-success">
+                                    <i class="bi bi-hand-index-thumb"></i>
+                                </div>
+
+                                <h6 class="fw-bold small mb-1">First Sign</h6>
+
+                                <span class="smaller text-muted">
+                                    Completed 1st ISL lesson
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="badge-card">
+
+                                <div class="badge-icon-box bg-soft-primary text-primary">
+                                    <i class="bi bi-fonts"></i>
+                                </div>
+
+                                <h6 class="fw-bold small mb-1">Alphabet Pro</h6>
+
+                                <span class="smaller text-muted">
+                                    Mastered A to Z signs
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="badge-card">
+
+                                <div class="badge-icon-box bg-soft-warning text-warning">
+                                    <i class="bi bi-chat-quote-fill"></i>
+                                </div>
+
+                                <h6 class="fw-bold small mb-1">Polite Signer</h6>
+
+                                <span class="smaller text-muted">
+                                    Mastered Hello & Thanks
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="badge-card">
+
+                                <div class="badge-icon-box" style="background:rgba(14,165,233,0.12);color:#0EA5E9;">
+
+                                    <i class="bi bi-trophy-fill"></i>
+
+                                </div>
+
+                                <h6 class="fw-bold small mb-1">Quiz Master</h6>
+
+                                <span class="smaller text-muted">
+                                    Scored 80%+ on 5 quizzes
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="badge-card locked">
+
+                                <div class="badge-icon-box bg-light text-secondary">
+                                    <i class="bi bi-lock-fill"></i>
+                                </div>
+
+                                <h6 class="fw-bold small mb-1">10-Day Streak</h6>
+
+                                <span class="smaller text-muted">
+                                    Practice 10 days in a row
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="badge-card locked">
+
+                                <div class="badge-icon-box bg-light text-secondary">
+                                    <i class="bi bi-lock-fill"></i>
+                                </div>
+
+                                <h6 class="fw-bold small mb-1">ISL Fluent</h6>
+
+                                <span class="smaller text-muted">
+                                    Complete all 48 lessons
+                                </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RECENT ACTIVITY TABLE -->
+                <div class="dash-card">
+
+                    <div class="dash-card-header">
+
+                        <h5 class="dash-card-title">
+                            <i class="bi bi-check2-square text-primary"></i>
+                            Recently Completed Lessons & Quizzes
+                        </h5>
+
+                        <span class="badge bg-light text-secondary border small">
+                            Verified Records
+                        </span>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle mb-0">
+
+                            <thead class="table-light small">
+                                <tr>
+                                    <th>Lesson / Topic</th>
+                                    <th>Category</th>
+                                    <th>Date Completed</th>
+                                    <th>Camera Practice Status</th>
+                                    <th>Quiz Score</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody class="small" id="recentActivityTable">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4">
+                                        Loading your recent activity...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
                 </div>
 
             </div>
 
+        </main>
 
-            <!-- PROGRESS METRIC CARDS -->
-            <div class="row g-4 mb-4">
+    </div>
 
-                <!-- TOTAL LESSONS -->
-                <div class="col-sm-6 col-xl-3">
 
-                    <div class="metric-card">
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastContainer"></div>
 
-                        <div class="metric-info">
 
-                            <div class="metric-label">Total Lessons</div>
+    <!-- JAVASCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-                            <div class="metric-value" id="progTotalLessons">48</div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
-                            <div class="metric-footer text-primary">
-                                <i class="bi bi-journals"></i>
-                                Standard ISL Curriculum
-                            </div>
+    <script src="js/main.js"></script>
 
-                        </div>
-
-                        <div class="metric-icon-box bg-soft-primary text-primary">
-                            <i class="bi bi-book"></i>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- COMPLETED LESSONS -->
-                <div class="col-sm-6 col-xl-3">
-
-                    <div class="metric-card">
-
-                        <div class="metric-info">
-
-                            <div class="metric-label">Lessons Mastered</div>
-
-                            <div class="metric-value" id="progCompletedLessons">0</div>
-
-                            <div class="metric-footer text-success">
-                                <i class="bi bi-check2-circle"></i>
-                                <span id="progCompletedSummary">0 of 48 Signs</span>
-                            </div>
-
-                        </div>
-
-                        <div class="metric-icon-box bg-soft-success text-success">
-                            <i class="bi bi-mortarboard-fill"></i>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- OVERALL COMPLETION -->
-                <div class="col-sm-6 col-xl-3">
-
-                    <div class="metric-card">
-
-                        <div class="metric-info">
-
-                            <div class="metric-label">Overall Completion</div>
-
-                            <div class="metric-value" id="progOverallPercent">0%</div>
-
-                            <div class="metric-footer text-info">
-                                <i class="bi bi-speedometer2"></i>
-                                Learning Progress
-                            </div>
-
-                        </div>
-
-                        <div class="metric-icon-box bg-soft-primary text-primary">
-                            <i class="bi bi-percent"></i>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- LEARNING STREAK -->
-                <div class="col-sm-6 col-xl-3">
-
-                    <div class="metric-card">
-
-                        <div class="metric-info">
-
-                            <div class="metric-label">Learning Streak</div>
-
-                            <div class="metric-value" id="progStreakDays">0 Days</div>
-
-                            <div class="metric-footer text-warning">
-                                <i class="bi bi-fire"></i>
-                                Learning Activity
-                            </div>
-
-                        </div>
-
-                        <div class="metric-icon-box bg-soft-warning text-warning">
-                            <i class="bi bi-lightning-charge-fill"></i>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- CHARTS -->
-            <div class="row g-4 mb-4">
-
-                <!-- WEEKLY ACTIVITY -->
-                <div class="col-lg-7">
-
-                    <div class="dash-card h-100 mb-0">
-
-                        <div class="dash-card-header">
-
-                            <h5 class="dash-card-title">
-                                <i class="bi bi-bar-chart-fill text-primary"></i>
-                                Weekly Learning Activity
-                            </h5>
-
-                            <span class="badge bg-light text-secondary border small">
-                                Last 7 Days
-                            </span>
-
-                        </div>
-
-                        <div style="height:280px;position:relative;">
-                            <canvas id="weeklyActivityChart"></canvas>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- CATEGORY MASTERY -->
-                <div class="col-lg-5">
-
-                    <div class="dash-card h-100 mb-0">
-
-                        <div class="dash-card-header">
-
-                            <h5 class="dash-card-title">
-                                <i class="bi bi-pie-chart-fill text-primary"></i>
-                                Category Mastery
-                            </h5>
-
-                            <span class="badge bg-light text-secondary border small">
-                                Accuracy Rate
-                            </span>
-
-                        </div>
-
-                        <div style="height:280px;position:relative;">
-                            <canvas id="categoryMasteryChart"></canvas>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ACHIEVEMENT BADGES -->
-            <div class="dash-card mb-4">
-
-                <div class="dash-card-header">
-
-                    <h5 class="dash-card-title">
-                        <i class="bi bi-award-fill text-warning"></i>
-                        Achievement Badges
-                    </h5>
-
-                    <span class="badge bg-primary text-white">Achievements</span>
-
-                </div>
-
-
-                <div class="row g-3">
-
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="badge-card">
-
-                            <div class="badge-icon-box bg-soft-success text-success">
-                                <i class="bi bi-hand-index-thumb"></i>
-                            </div>
-
-                            <h6 class="fw-bold small mb-1">First Sign</h6>
-
-                            <span class="smaller text-muted">
-                                Completed 1st ISL lesson
-                            </span>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="badge-card">
-
-                            <div class="badge-icon-box bg-soft-primary text-primary">
-                                <i class="bi bi-fonts"></i>
-                            </div>
-
-                            <h6 class="fw-bold small mb-1">Alphabet Pro</h6>
-
-                            <span class="smaller text-muted">
-                                Mastered A to Z signs
-                            </span>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="badge-card">
-
-                            <div class="badge-icon-box bg-soft-warning text-warning">
-                                <i class="bi bi-chat-quote-fill"></i>
-                            </div>
-
-                            <h6 class="fw-bold small mb-1">Polite Signer</h6>
-
-                            <span class="smaller text-muted">
-                                Mastered Hello & Thanks
-                            </span>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="badge-card">
-
-                            <div class="badge-icon-box"
-                                 style="background:rgba(14,165,233,0.12);color:#0EA5E9;">
-
-                                <i class="bi bi-trophy-fill"></i>
-
-                            </div>
-
-                            <h6 class="fw-bold small mb-1">Quiz Master</h6>
-
-                            <span class="smaller text-muted">
-                                Scored 80%+ on 5 quizzes
-                            </span>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="badge-card locked">
-
-                            <div class="badge-icon-box bg-light text-secondary">
-                                <i class="bi bi-lock-fill"></i>
-                            </div>
-
-                            <h6 class="fw-bold small mb-1">10-Day Streak</h6>
-
-                            <span class="smaller text-muted">
-                                Practice 10 days in a row
-                            </span>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="badge-card locked">
-
-                            <div class="badge-icon-box bg-light text-secondary">
-                                <i class="bi bi-lock-fill"></i>
-                            </div>
-
-                            <h6 class="fw-bold small mb-1">ISL Fluent</h6>
-
-                            <span class="smaller text-muted">
-                                Complete all 48 lessons
-                            </span>
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- RECENT ACTIVITY TABLE -->
-            <div class="dash-card">
-
-                <div class="dash-card-header">
-
-                    <h5 class="dash-card-title">
-                        <i class="bi bi-check2-square text-primary"></i>
-                        Recently Completed Lessons & Quizzes
-                    </h5>
-
-                    <span class="badge bg-light text-secondary border small">
-                        Verified Records
-                    </span>
-
-                </div>
-
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle mb-0">
-
-                        <thead class="table-light small">
-
-                            <tr>
-                                <th>Lesson / Topic</th>
-                                <th>Category</th>
-                                <th>Date Completed</th>
-                                <th>Camera Practice Status</th>
-                                <th>Quiz Score</th>
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody class="small" id="recentActivityTable">
-
-                            <tr>
-                                <td colspan="5" class="text-center text-muted py-4">
-                                    Loading your recent activity...
-                                </td>
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-</div>
-
-
-<!-- TOAST NOTIFICATION -->
-<div id="toastContainer"></div>
-
-
-<!-- JAVASCRIPT -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-
-<script src="js/main.js"></script>
-
-<script src="js/progress.js"></script>
+    <script src="js/progress.js"></script>
 
 </body>
+
 </html>

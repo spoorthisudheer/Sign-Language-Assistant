@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="css/learning.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
   <div class="app-wrapper">
@@ -29,6 +31,7 @@
       <div class="sidebar-menu-wrapper">
         <div class="sidebar-heading">Main Navigation</div>
         <ul class="sidebar-nav">
+
           <li>
             <a href="dashboard.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -37,6 +40,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="learn.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -46,6 +50,7 @@
               <span class="badge bg-primary-subtle text-primary sidebar-badge">48</span>
             </a>
           </li>
+
           <li>
             <a href="practice.html" class="sidebar-link active">
               <div class="sidebar-link-content">
@@ -54,6 +59,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="communication.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -63,14 +69,9 @@
               <span class="badge bg-danger-subtle text-danger sidebar-badge">AI Live</span>
             </a>
           </li>
-          <li>
-            <a href="text-to-sign.html" class="sidebar-link">
-              <div class="sidebar-link-content">
-                <i class="bi bi-translate"></i>
-                <span>Text-to-Sign</span>
-              </div>
-            </a>
-          </li>
+
+          <!-- Text-to-Sign navigation removed -->
+
           <li>
             <a href="quiz.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -79,6 +80,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="progress.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -87,10 +89,12 @@
               </div>
             </a>
           </li>
+
         </ul>
 
         <div class="sidebar-heading">Account & Settings</div>
         <ul class="sidebar-nav">
+
           <li>
             <a href="profile.html" class="sidebar-link">
               <div class="sidebar-link-content">
@@ -99,6 +103,7 @@
               </div>
             </a>
           </li>
+
           <li>
             <a href="javascript:void(0)" onclick="SignConnect.logout()" class="sidebar-link text-danger">
               <div class="sidebar-link-content">
@@ -107,6 +112,7 @@
               </div>
             </a>
           </li>
+
         </ul>
       </div>
 
@@ -123,12 +129,14 @@
 
     <!-- Main Content Area -->
     <main class="app-main">
+
       <!-- Topbar -->
       <header class="app-topbar">
         <div class="topbar-left">
           <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
             <i class="bi bi-list"></i>
           </button>
+
           <div class="topbar-breadcrumb">
             <a href="dashboard.html" class="text-secondary text-decoration-none">SignConnect</a>
             <i class="bi bi-chevron-right text-muted small"></i>
@@ -140,11 +148,14 @@
           <div class="backend-status-pill" id="backendStatusPill" title="Backend Status">
             <span class="status-dot"></span> Flask API: Ready
           </div>
+
           <button class="topbar-icon-btn" title="Notifications">
             <i class="bi bi-bell"></i>
           </button>
+
           <a href="profile.html" class="d-flex align-items-center gap-2 text-decoration-none">
-            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">SL</div>
+            <div class="sidebar-user-avatar topbar-user-avatar" style="width: 36px; height: 36px; font-size: 0.85rem;">
+              SL</div>
             <span class="fw-bold small text-dark d-none d-sm-inline topbar-user-name">SignConnect Learner</span>
           </a>
         </div>
@@ -152,6 +163,7 @@
 
       <!-- Page Content -->
       <div class="page-content">
+
         <!-- Header -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
           <div>
@@ -160,6 +172,7 @@
               Position your hands in the webcam frame to match the target Indian Sign Language sign.
             </p>
           </div>
+
           <div class="d-flex align-items-center gap-2">
             <button type="button" class="btn btn-outline-primary" id="btnNextRandomSign">
               <i class="bi bi-shuffle me-1"></i> Random Sign
@@ -173,13 +186,16 @@
           <div>
             <h6 class="fw-bold mb-1 text-dark">AI Recognition Integration Preparation</h6>
             <p class="small text-secondary mb-0">
-              The camera stream uses browser-native <code>getUserMedia</code>. The recognition result area connects to the Flask backend endpoint <code>POST /api/predict</code> (developed with OpenCV & MediaPipe by the AI team). Use the simulation toggles below to test feedback states during development reviews.
+              The camera stream uses browser-native <code>getUserMedia</code>. The recognition result area connects to
+              the Flask backend endpoint <code>POST /api/predict</code> (developed with OpenCV & MediaPipe by the AI
+              team). Use the simulation toggles below to test feedback states during development reviews.
             </p>
           </div>
         </div>
 
         <!-- Practice Grid -->
         <div class="row g-4">
+
           <!-- Left: Webcam Studio -->
           <div class="col-lg-7">
             <div class="dash-card mb-4">
@@ -198,7 +214,7 @@
 
                 <!-- Video Element -->
                 <video id="practiceVideo" playsinline autoplay muted style="display: none;"></video>
-                
+
                 <!-- Landmark Canvas Overlay -->
                 <canvas id="practiceCanvasOverlay"></canvas>
 
@@ -264,11 +280,13 @@
 
           <!-- Right: Target Sign & Instructions -->
           <div class="col-lg-5">
+
             <!-- Target Sign Showcase Card -->
             <div class="dash-card mb-4">
               <div class="dash-card-header">
                 <div>
-                  <span class="badge bg-primary-subtle text-primary fw-bold small" id="targetSignCategory">Alphabets</span>
+                  <span class="badge bg-primary-subtle text-primary fw-bold small"
+                    id="targetSignCategory">Alphabets</span>
                   <h5 class="dash-card-title mt-1" id="targetSignTitle">Letter A (ISL)</h5>
                 </div>
                 <span class="badge bg-light text-secondary border" id="targetSignHandBadge">2 Hands Required</span>
@@ -276,7 +294,8 @@
 
               <!-- Sign Selector Dropdown -->
               <div class="mb-3">
-                <label for="practiceSignSelector" class="form-label small fw-bold text-muted">Choose Any Sign to Practice:</label>
+                <label for="practiceSignSelector" class="form-label small fw-bold text-muted">Choose Any Sign to
+                  Practice:</label>
                 <select class="form-select form-select-sm" id="practiceSignSelector">
                   <!-- Injected via practice.js -->
                 </select>
@@ -295,7 +314,8 @@
               </div>
 
               <div class="d-flex gap-2">
-                <button type="button" class="btn btn-outline-primary btn-sm flex-grow-1" onclick="SignConnect.speakText(document.getElementById('targetSignLabel').textContent)">
+                <button type="button" class="btn btn-outline-primary btn-sm flex-grow-1"
+                  onclick="SignConnect.speakText(document.getElementById('targetSignLabel').textContent)">
                   <i class="bi bi-volume-up"></i> Pronounce Sign
                 </button>
                 <span id="targetSignLabel" class="d-none">A</span>
@@ -326,6 +346,7 @@
                 </li>
               </ul>
             </div>
+
           </div>
         </div>
       </div>
@@ -341,4 +362,5 @@
   <script src="js/main.js"></script>
   <script src="js/practice.js"></script>
 </body>
+
 </html>
